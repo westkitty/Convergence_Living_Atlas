@@ -74,6 +74,26 @@ dump_mobile() {
   printf '%s' "$out"
 }
 
+
+dump_mobile_landscape() {
+  local hash="$1"
+  local out
+  out="$("$BROWSER" \
+    --headless=new \
+    --no-sandbox \
+    --disable-gpu \
+    --disable-dev-shm-usage \
+    --window-size=844,390 \
+    --user-agent='Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1' \
+    --virtual-time-budget=1800 \
+    --dump-dom "http://127.0.0.1:$PORT/index.html#$hash" 2>/dev/null || true)"
+  if [[ -z "$out" ]]; then
+    echo "Mobile landscape browser returned no DOM for #$hash" >&2
+    return 1
+  fi
+  printf '%s' "$out"
+}
+
 echo "SMOKE: overview"
 OVERVIEW="$(dump overview)"
 grep -q 'Six covers. One widening architecture.' <<<"$OVERVIEW"
@@ -126,5 +146,12 @@ grep -q 'phone-shell' <<<"$IPHONE_ATLAS"
 grep -q 'atlas-panel-toggle' <<<"$IPHONE_ATLAS"
 grep -q 'atlas-panel collapsed' <<<"$IPHONE_ATLAS"
 grep -q 'gdrive-atlas-art' <<<"$IPHONE_ATLAS"
+
+echo "SMOKE: iPhone landscape atlas"
+IPHONE_LANDSCAPE="$(dump_mobile_landscape atlas)"
+grep -q 'phone-shell' <<<"$IPHONE_LANDSCAPE"
+grep -q 'phone-landscape' <<<"$IPHONE_LANDSCAPE"
+grep -q 'mobile-nav' <<<"$IPHONE_LANDSCAPE"
+grep -q 'atlas-panel-toggle' <<<"$IPHONE_LANDSCAPE"
 
 echo "BROWSER + MOBILE SMOKE PASS"
