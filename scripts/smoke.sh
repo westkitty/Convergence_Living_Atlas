@@ -42,33 +42,40 @@ dump() {
   "$BROWSER"     --headless=new     --no-sandbox     --disable-gpu     --disable-dev-shm-usage     --virtual-time-budget=1800     --dump-dom "http://127.0.0.1:$PORT/index.html#$hash"
 }
 
+echo "SMOKE: overview"
 OVERVIEW="$(dump overview)"
 grep -q 'Six covers. One widening architecture.' <<<"$OVERVIEW"
 grep -q 'Enter relationship atlas' <<<"$OVERVIEW"
 grep -q 'generated-hero-art' <<<"$OVERVIEW"
 grep -q 'Visual archive' <<<"$OVERVIEW"
 
+echo "SMOKE: book"
 BOOK="$(dump book/1)"
 grep -q 'asset-driven dossier' <<<"$BOOK"
 grep -q 'People introduced' <<<"$BOOK"
 
+echo "SMOKE: timeline"
 TIMELINE="$(dump timeline)"
 grep -q 'Time changes the network' <<<"$TIMELINE"
 grep -q 'event-e1.webp' <<<"$TIMELINE"
 
+echo "SMOKE: events"
 EVENTS="$(dump events)"
 grep -q 'event-e1.webp' <<<"$EVENTS"
 grep -q 'event-e13.webp' <<<"$EVENTS"
 
+echo "SMOKE: groups"
 GROUPS="$(dump groups)"
 grep -q 'group-team.webp' <<<"$GROUPS"
 grep -q 'group-angels.webp' <<<"$GROUPS"
 
+echo "SMOKE: archive"
 ARCHIVE="$(dump archive)"
 grep -q 'loc-earth.webp' <<<"$ARCHIVE"
 grep -q 'obj-amulet.webp' <<<"$ARCHIVE"
 grep -q 'theme-loyalty.webp' <<<"$ARCHIVE"
 
+echo "SMOKE: atlas"
 ATLAS="$(dump atlas)"
 grep -q 'Relationship atlas' <<<"$ATLAS"
 grep -q 'network' <<<"$ATLAS"
