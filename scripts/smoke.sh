@@ -39,7 +39,19 @@ fi
 
 dump() {
   local hash="$1"
-  "$BROWSER"     --headless=new     --no-sandbox     --disable-gpu     --disable-dev-shm-usage     --virtual-time-budget=1800     --dump-dom "http://127.0.0.1:$PORT/index.html#$hash"
+  local out
+  out="$("$BROWSER" \
+    --headless=new \
+    --no-sandbox \
+    --disable-gpu \
+    --disable-dev-shm-usage \
+    --virtual-time-budget=1800 \
+    --dump-dom "http://127.0.0.1:$PORT/index.html#$hash" 2>/dev/null || true)"
+  if [[ -z "$out" ]]; then
+    echo "Headless browser returned no DOM for #$hash" >&2
+    return 1
+  fi
+  printf '%s' "$out"
 }
 
 echo "SMOKE: overview"
@@ -66,7 +78,6 @@ grep -q 'event-e13.webp' <<<"$EVENTS"
 
 echo "SMOKE: groups"
 GROUPS="$(dump groups)"
-echo "SMOKE GROUP ASSETS: $(grep -oE 'group-[a-z-]+\\.webp' <<<"$GROUPS" | sort -u | tr '\\n' ' ')" 
 echo "SMOKE: groups team asset"
 grep -q 'group-team.webp' <<<"$GROUPS"
 echo "SMOKE: groups angels asset"
