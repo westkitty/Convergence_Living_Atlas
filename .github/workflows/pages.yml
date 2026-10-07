@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Sync site files to gh-pages
+      - name: Sync site files and assets to gh-pages
         shell: bash
         run: |
           set -euo pipefail
@@ -32,11 +32,15 @@ jobs:
           git fetch origin gh-pages
           git checkout -B gh-pages origin/gh-pages
 
-          git checkout "$GITHUB_SHA" -- index.html .nojekyll
-          git add index.html .nojekyll
+          # The deployed branch must contain the exact production asset tree
+          # from the source revision. Remove stale deployed assets first.
+          git rm -r --ignore-unmatch assets
+          git checkout "$GITHUB_SHA" -- index.html .nojekyll assets
+
+          git add index.html .nojekyll assets
 
           if git diff --cached --quiet; then
-            echo "gh-pages already matches main site files."
+            echo "gh-pages already matches main site files and assets."
             exit 0
           fi
 
