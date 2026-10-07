@@ -15,6 +15,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout full history
         uses: actions/checkout@v4
@@ -39,10 +40,41 @@ jobs:
 
           git add index.html .nojekyll assets
 
-          if git diff --cached --quiet; then
+          if ! git diff --cached --quiet; then
+            git commit -m "Deploy ${GITHUB_SHA::7}"
+            git push origin gh-pages
+          else
             echo "gh-pages already matches main site files and assets."
-            exit 0
           fi
 
-          git commit -m "Deploy ${GITHUB_SHA::7}"
-          git push origin gh-pages
+      - name: Verify live Pages bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BASE="https://westkitty.github.io/Convergence_Living_Atlas"
+          LIVE_INDEX="/tmp/convergence-live-index.html"
+          LIVE_COVER="/tmp/convergence-live-covers.webp"
+
+          matched=0
+          for attempt in $(seq 1 30); do
+            if curl -fsS --max-time 10 "$BASE/" -o "$LIVE_INDEX" \
+              && curl -fsS --max-time 10 "$BASE/assets/covers.webp" -o "$LIVE_COVER" \
+              && cmp -s index.html "$LIVE_INDEX" \
+              && cmp -s assets/covers.webp "$LIVE_COVER"; then
+              matched=1
+              echo "Live Pages matches deployed index.html and cover asset on attempt $attempt."
+              break
+            fi
+            echo "Waiting for Pages/CDN propagation (attempt $attempt/30)..."
+            sleep 2
+          done
+
+          if [[ "$matched" -ne 1 ]]; then
+            echo "Live Pages did not converge to the deployed bytes within the retry window." >&2
+            exit 1
+          fi
+
+          grep -q '<title>Convergence: Living Atlas</title>' "$LIVE_INDEX"
+          test -s "$LIVE_COVER"
+          echo "LIVE PAGES SMOKE PASS"
