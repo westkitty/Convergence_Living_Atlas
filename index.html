@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#080a0f">
 <link rel="preload" href="assets/covers.webp" as="image" type="image/webp">
@@ -112,6 +115,273 @@
 .asset-provenance{margin-top:10px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#8294ab}
 @media(max-width:720px){.archive-entry{grid-template-columns:74px minmax(0,1fr)}.archive-thumb{width:74px}.time-record-art{width:104px}.record-art{border-radius:11px}}
 
+
+/* iPhone + mobile interaction/performance pass */
+:root{
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+  --vvh:100dvh;
+  --vvw:100vw;
+  --mobile-nav-h:62px;
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none}
+body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+.view,.sheet-body,.palette-results{-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+.atlas-panel-toggle{display:none;width:100%;min-height:44px;border:0;border-bottom:1px solid var(--line);background:transparent;color:#fff;padding:0 2px;margin:0 0 10px;align-items:center;justify-content:space-between;font-weight:750;letter-spacing:.02em;touch-action:manipulation}
+.atlas-panel-toggle b{font-size:16px;transition:transform .2s var(--ease)}
+.atlas-panel:not(.collapsed) .atlas-panel-toggle b{transform:rotate(180deg)}
+@media(hover:none){
+  .char-card:hover,.book-tile:hover,.cover-card:hover,.record-art:hover img{transform:none}
+  .icon-btn:hover,.ghost-btn:hover,.chip:hover{background:rgba(18,25,36,.72);border-color:var(--line)}
+}
+body.phone-shell{
+  --top:56px;
+  --mobile-nav-h:64px;
+}
+body.phone-shell .shell{
+  height:var(--vvh,100dvh);
+  grid-template-columns:1fr;
+  grid-template-rows:calc(var(--top) + var(--safe-top)) minmax(0,1fr);
+}
+body.phone-shell .topbar{
+  grid-column:1;
+  align-items:flex-end;
+  gap:6px;
+  padding:var(--safe-top) calc(9px + var(--safe-right)) 8px calc(9px + var(--safe-left));
+}
+body.phone-shell .brand{min-width:0;flex:1;overflow:hidden}
+body.phone-shell .brand h1{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.phone-shell .brand small,body.phone-shell .crumb,body.phone-shell .key,body.phone-shell .desktop-only{display:none}
+body.phone-shell .brand-mark{width:30px;height:30px;flex:0 0 30px}
+body.phone-shell .top-actions{gap:5px;flex:0 0 auto}
+body.phone-shell .top-actions .icon-btn{width:44px;min-width:44px;min-height:44px;padding:0;font-size:0}
+body.phone-shell .top-actions .icon-btn span{display:none}
+body.phone-shell #scopeBtn{width:auto;min-width:54px;padding:0 9px;font-size:10px}
+body.phone-shell #scopeBtn #scopeLabel{display:inline;font-size:10px;white-space:nowrap}
+body.phone-shell #searchBtn:before{content:'⌕';font-size:22px;line-height:1}
+body.phone-shell #cmdBtn:before{content:'⌘';font-size:18px;line-height:1}
+body.phone-shell .top-actions .solid-btn{display:none}
+body.phone-shell .rail{display:none}
+body.phone-shell .main{grid-column:1;grid-row:2}
+body.phone-shell .view{
+  padding:20px calc(14px + var(--safe-right)) calc(98px + var(--safe-bottom)) calc(14px + var(--safe-left));
+  scroll-padding-bottom:calc(92px + var(--safe-bottom));
+}
+body.phone-shell .view.no-pad{padding:0}
+body.phone-shell .grid{display:block}
+body.phone-shell .grid>.card{margin-bottom:12px}
+body.phone-shell .pad{padding:17px}
+body.phone-shell .page-head{margin-bottom:18px}
+body.phone-shell .page-head h2{font-size:clamp(37px,11vw,48px);line-height:.96}
+body.phone-shell .page-head p,body.phone-shell .prose{font-size:15.5px;line-height:1.62}
+body.phone-shell .tiny{font-size:12.5px;line-height:1.48}
+body.phone-shell .eyebrow,body.phone-shell .kicker,body.phone-shell .section-title{font-size:9.5px}
+body.phone-shell button,body.phone-shell .ghost-btn,body.phone-shell .solid-btn,body.phone-shell .chip,body.phone-shell .icon-btn{min-height:44px}
+body.phone-shell select,body.phone-shell input,body.phone-shell textarea{
+  font-size:16px!important;
+}
+body.phone-shell .select{min-height:46px}
+body.phone-shell .range{min-height:34px}
+body.phone-shell .mobile-nav{
+  display:flex;
+  position:fixed;
+  left:calc(8px + var(--safe-left));
+  right:calc(8px + var(--safe-right));
+  bottom:calc(7px + var(--safe-bottom));
+  height:var(--mobile-nav-h);
+  z-index:45;
+  padding:5px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(12,16,23,.94);
+  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);
+  box-shadow:0 14px 50px rgba(0,0,0,.45)
+}
+body.phone-shell .mobile-nav button{
+  flex:1;
+  min-width:44px;
+  min-height:44px;
+  border:0;
+  border-radius:14px;
+  background:transparent;
+  color:#9aa8bb;
+  font-size:9px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  touch-action:manipulation
+}
+body.phone-shell .mobile-nav button b{font-size:17px}
+body.phone-shell .mobile-nav button.active{color:#fff;background:rgba(255,255,255,.075)}
+body.phone-shell .home-hero{
+  min-height:auto;
+  grid-template-columns:1fr;
+  gap:14px;
+  padding:30px calc(17px + var(--safe-right)) 18px calc(17px + var(--safe-left))
+}
+body.phone-shell .home-title{font-size:clamp(50px,16vw,74px);line-height:.82;margin:18px 0}
+body.phone-shell .home-deck{font-size:16px;line-height:1.58}
+body.phone-shell .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:22px 0 16px}
+body.phone-shell .hero-actions>:first-child{grid-column:1/-1}
+body.phone-shell .hero-actions .solid-btn,body.phone-shell .hero-actions .ghost-btn{width:100%;min-height:48px;padding:0 12px}
+body.phone-shell .scope-line{gap:6px}
+body.phone-shell .scope-chip{font-size:9.5px;padding:6px 8px}
+body.phone-shell .cover-fan{
+  position:relative;
+  display:flex;
+  gap:10px;
+  height:auto;
+  width:100%;
+  margin:0;
+  padding:8px 2px 14px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-inline:12px;
+  filter:none;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch
+}
+body.phone-shell .cover-fan::-webkit-scrollbar{display:none}
+body.phone-shell .cover-card,
+body.phone-shell .cover-card:nth-child(n){
+  position:relative;
+  inset:auto;
+  left:auto;
+  top:auto;
+  flex:0 0 112px;
+  width:112px;
+  height:145px;
+  transform:none!important;
+  scroll-snap-align:center
+}
+body.phone-shell .home-content{padding:22px calc(14px + var(--safe-right)) 0 calc(14px + var(--safe-left))}
+body.phone-shell .home-section-head{display:block}
+body.phone-shell .home-section-head h3{font-size:34px}
+body.phone-shell .lens-grid,body.phone-shell .archive-grid,body.phone-shell .field-band{grid-template-columns:1fr}
+body.phone-shell .lens-card{min-height:180px}
+body.phone-shell .book-shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+body.phone-shell .book-tile{min-height:218px}
+body.phone-shell .book-art{height:150px}
+body.phone-shell .field-stats{grid-template-columns:repeat(2,1fr)}
+body.phone-shell .generated-art-banner{height:clamp(140px,38vw,180px);margin-bottom:16px;border-radius:16px}
+body.phone-shell .generated-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+body.phone-shell .generated-gallery-card{min-height:132px}
+body.phone-shell .book-hero{grid-template-columns:1fr;padding:14px 0 18px}
+body.phone-shell .book-cover-large{width:min(54vw,270px);margin:auto;border-radius:18px}
+body.phone-shell .book-copy{text-align:center}
+body.phone-shell .book-copy h2{font-size:clamp(48px,14vw,72px)}
+body.phone-shell .book-copy .lede{margin:auto;font-size:15.5px}
+body.phone-shell .book-actions{justify-content:center}
+body.phone-shell .book-actions>*{flex:1 1 150px}
+body.phone-shell .book-stats{grid-template-columns:repeat(2,1fr)}
+body.phone-shell .char-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+body.phone-shell .char-card{min-height:205px;padding:14px}
+body.phone-shell .char-card h3{font-size:19px}
+body.phone-shell .char-foot{left:14px;right:14px}
+body.phone-shell .dossier-hero{grid-template-columns:1fr;min-height:350px;padding:22px 18px}
+body.phone-shell .generated-dossier-portrait{width:100%;height:55%;opacity:.20;mask-image:linear-gradient(180deg,#000,transparent)}
+body.phone-shell .record-art{margin:-2px -2px 13px}
+body.phone-shell .record-art-label{font-size:8.5px}
+body.phone-shell .archive-entry{grid-template-columns:78px minmax(0,1fr);gap:10px;min-height:70px}
+body.phone-shell .archive-thumb{width:78px}
+body.phone-shell .archive-type{font-size:9px}
+body.phone-shell .time-record-art{width:108px}
+body.phone-shell .atlas-hud{
+  left:calc(8px + var(--safe-left));
+  right:calc(8px + var(--safe-right));
+  top:8px;
+  max-width:none;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:2px
+}
+body.phone-shell .atlas-hud::-webkit-scrollbar{display:none}
+body.phone-shell .atlas-hud .chip{flex:0 0 auto;min-height:44px}
+body.phone-shell .atlas-panel{
+  left:calc(8px + var(--safe-left));
+  right:calc(8px + var(--safe-right));
+  top:auto;
+  bottom:calc(var(--mobile-nav-h) + 14px + var(--safe-bottom));
+  width:auto;
+  max-height:min(58dvh,calc(var(--vvh,100dvh) * .58));
+  border-radius:18px;
+  padding:11px 13px 14px;
+  -webkit-overflow-scrolling:touch
+}
+body.phone-shell .atlas-panel-toggle{display:flex}
+body.phone-shell .atlas-panel.collapsed{max-height:54px;overflow:hidden;padding-bottom:7px}
+body.phone-shell .atlas-panel.collapsed>:not(.atlas-panel-toggle){display:none}
+body.phone-shell .atlas-panel .ghost-btn,body.phone-shell .atlas-panel .solid-btn{min-height:44px!important}
+body.phone-shell .canvas-legend,body.phone-shell .minimap{display:none}
+body.phone-shell .sheet{
+  left:calc(4px + var(--safe-left));
+  right:calc(4px + var(--safe-right));
+  top:auto;
+  bottom:0;
+  width:auto;
+  height:min(68dvh,calc(var(--vvh,100dvh) * .68));
+  max-height:calc(var(--vvh,100dvh) - 6px - var(--safe-top));
+  border-radius:24px 24px 0 0;
+  transform:translateY(105%)
+}
+body.phone-shell .sheet.peek{height:min(36dvh,calc(var(--vvh,100dvh) * .36))}
+body.phone-shell .sheet.half{height:min(68dvh,calc(var(--vvh,100dvh) * .68))}
+body.phone-shell .sheet.full{height:calc(var(--vvh,100dvh) - 6px - var(--safe-top))}
+body.phone-shell .sheet-body{padding:16px calc(16px + var(--safe-right)) calc(22px + var(--safe-bottom)) calc(16px + var(--safe-left))}
+body.phone-shell .sheet-handle{display:block;width:54px;height:5px}
+body.phone-shell .sheet-top{padding:8px calc(12px + var(--safe-right)) 10px calc(12px + var(--safe-left))}
+body.phone-shell .modal{
+  align-items:flex-start;
+  padding:calc(var(--safe-top) + 8px) calc(var(--safe-right) + 8px) calc(var(--safe-bottom) + 8px) calc(var(--safe-left) + 8px)
+}
+body.phone-shell .palette{
+  width:100%;
+  max-height:min(84dvh,calc(var(--vvh,100dvh) - var(--safe-top) - 16px));
+  border-radius:18px
+}
+body.phone-shell .palette input{height:56px;font-size:16px}
+body.phone-shell .palette-results{max-height:calc(var(--vvh,100dvh) - var(--safe-top) - 90px)}
+body.phone-shell .palette-item{min-height:52px;padding:9px}
+body.phone-shell .story-slide{padding:46px calc(16px + var(--safe-right)) calc(92px + var(--safe-bottom)) calc(16px + var(--safe-left))}
+body.phone-shell .story-inner h2{font-size:clamp(42px,13vw,62px)}
+body.phone-shell .story-inner p{font-size:16px;line-height:1.56}
+body.phone-shell .story-controls{left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));bottom:calc(var(--mobile-nav-h) + 12px + var(--safe-bottom))}
+body.phone-shell .story-controls button{min-width:48px}
+body.phone-landscape{
+  --top:50px;
+  --mobile-nav-h:52px;
+}
+body.phone-landscape .brand small{display:none}
+body.phone-landscape .view{padding-top:14px;padding-bottom:calc(72px + var(--safe-bottom))}
+body.phone-landscape .mobile-nav{height:var(--mobile-nav-h);bottom:calc(4px + var(--safe-bottom));border-radius:16px}
+body.phone-landscape .mobile-nav button{min-height:40px}
+body.phone-landscape .atlas-panel{
+  left:auto;
+  right:calc(7px + var(--safe-right));
+  width:min(340px,43vw);
+  bottom:calc(var(--mobile-nav-h) + 9px + var(--safe-bottom));
+  max-height:calc(var(--vvh,100dvh) - var(--top) - var(--safe-top) - var(--mobile-nav-h) - 24px)
+}
+body.phone-landscape .atlas-panel.collapsed{width:180px}
+body.phone-landscape .atlas-hud{right:calc(350px + var(--safe-right))}
+body.phone-landscape .home-hero{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center;padding-top:18px}
+body.phone-landscape .cover-fan{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible;gap:7px;padding:0}
+body.phone-landscape .cover-card,body.phone-landscape .cover-card:nth-child(n){width:88px;height:114px;justify-self:center}
+body.phone-landscape .generated-art-banner{height:150px}
+@media(max-width:390px){
+  body.phone-shell .brand h1{font-size:12px;letter-spacing:.11em}
+  body.phone-shell #scopeBtn{min-width:48px;padding:0 7px}
+  body.phone-shell #cmdBtn{display:none}
+  body.phone-shell .char-grid{grid-template-columns:1fr}
+  body.phone-shell .hero-actions{grid-template-columns:1fr}
+  body.phone-shell .hero-actions>:first-child{grid-column:auto}
+}
+
 </style>
 </head>
 <body>
@@ -122,6 +392,24 @@
 <div class="backdrop" id="backdrop"></div><aside class="sheet half" id="sheet" role="dialog" aria-modal="true"><div class="sheet-handle" id="sheetHandle"></div><div class="sheet-top"><h3 id="sheetTitle">Inspector</h3><button class="icon-btn" id="sheetClose" aria-label="Close">x</button></div><div class="sheet-body" id="sheetBody"></div></aside>
 <div class="modal" id="palette" role="dialog" aria-modal="true" aria-label="Search and command palette"><div class="palette"><input id="paletteInput" autocomplete="off" placeholder="Search the archive or type a command"><div class="palette-results" id="paletteResults"></div></div></div><div class="toast" id="toast" role="status" aria-live="polite"></div><div class="perf" id="perf"></div>
 <script>
+
+/* mobile viewport + iPhone safe-area runtime */
+function syncMobileViewport(){
+  const vv=window.visualViewport;
+  const w=Math.round(vv?.width||window.innerWidth);
+  const h=Math.round(vv?.height||window.innerHeight);
+  document.documentElement.style.setProperty('--vvh',h+'px');
+  document.documentElement.style.setProperty('--vvw',w+'px');
+  const phone=w<=720||(h<=540&&w<=960);
+  document.body.classList.toggle('phone-shell',phone);
+  document.body.classList.toggle('phone-landscape',phone&&w>h);
+}
+syncMobileViewport();
+window.addEventListener('resize',syncMobileViewport,{passive:true});
+window.addEventListener('orientationchange',()=>setTimeout(syncMobileViewport,80),{passive:true});
+window.visualViewport?.addEventListener('resize',syncMobileViewport,{passive:true});
+window.visualViewport?.addEventListener('scroll',syncMobileViewport,{passive:true});
+
 const BOOKS=[
  {id:'b1',n:1,title:'Convergence',year:2022,color:'#ff7757',chapters:31,pages:482},
  {id:'b2',n:2,title:'Dragonslayer',year:2023,color:'#63c7ff',chapters:32,pages:521},
@@ -370,8 +658,12 @@ function inspectContradiction(id){const c=CONTRADICTIONS.find(x=>x.id===id);if(!
 function renderAtlas(opts={}){
  const relTypes=['all',...new Set(RELATIONSHIPS.map(r=>r.type))];
  const pathEntities=ALL_ENTITIES.filter(e=>RELATIONSHIPS.some(r=>r.source===e.id||r.target===e.id));
- app.innerHTML=`<section class="view no-pad"><div class="atlas"><div class="atlas-watermark">CONVERGENCE</div><canvas id="network" aria-label="Interactive relationship network. Use the adjacent controls or accessible views for equivalent information."></canvas><div class="atlas-hud"><button class="chip" data-graph-action="fit">Fit</button><button class="chip" data-graph-action="reset">Reset</button><button class="chip" data-graph-action="labels">Labels ${STATE.labels?'on':'off'}</button><button class="chip phone-hide" data-graph-layer="events">Events</button><button class="chip phone-hide" data-graph-layer="knowledge">Knowledge</button></div><div class="atlas-panel" id="atlasPanel"><div class="kicker">Living system</div><h3>${opts.knowledge?'Knowledge reveal':'Relationship atlas'}</h3><p class="tiny">Tap nodes or edges. Drag to pan. Pinch or wheel to zoom. Filtering and time operate on the same source model used by every other view.</p><div class="atlas-stats"><div class="stat"><b>${CHARACTERS.length}</b><span class="tiny">people</span></div><div class="stat"><b>${RELATIONSHIPS.length}</b><span class="tiny">bonds</span></div><div class="stat"><b>${EVENTS.length}</b><span class="tiny">events</span></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 10px"><span class="tiny"><b id="filterCount">0</b> active filters</span><button class="ghost-btn" id="clearFilters" style="min-height:32px;padding:0 9px">Clear all</button></div><label class="tiny">Entity class<select class="select" id="entityClass"><option value="all">all</option><option value="character">characters</option><option value="group">groups</option><option value="event">events</option><option value="knowledge">knowledge</option></select></label><label class="tiny" style="display:block;margin-top:10px">Character<select class="select" id="characterFilter"><option value="all">all characters</option>${CHARACTERS.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></label><label class="tiny" style="display:block;margin-top:10px">Group<select class="select" id="groupFilter"><option value="all">all groups</option>${GROUPS.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></label><label class="tiny" style="display:block;margin-top:10px">Relationship type<select class="select" id="relType">${relTypes.map(t=>`<option value="${t}">${t}</option>`).join('')}</select></label><label class="tiny" style="display:block;margin-top:10px">Confidence<select class="select" id="confidenceFilter"><option value="all">all confidence states</option><option value="high">confirmed</option><option value="reported">reported</option><option value="inferred">inferred</option></select></label><label class="tiny" style="display:block;margin-top:10px">Conflict<select class="select" id="conflictFilter"><option value="all">show all</option><option value="only">conflict only</option><option value="hide">hide conflict</option></select></label><label class="tiny" style="display:block;margin-top:10px">Minimum strength <span id="strengthOut">1</span><input id="strength" class="range" type="range" min="1" max="10" value="1"></label><label class="tiny" style="display:block;margin-top:10px">Chronology through ${bookLabel(STATE.timelineBook)}<input id="timeScrub" class="range" type="range" min="1" max="6" step="1" value="${STATE.timelineBook}"></label><label class="tiny" style="display:block;margin-top:10px">Focus mode<select class="select" id="focusMode"><option value="full">FULL</option><option value="1hop">1-HOP</option><option value="2hop">2-HOP</option><option value="cluster">CLUSTER</option></select></label><div class="divider"></div><div class="section-title">Path finder</div><select class="select" id="pathA">${pathEntities.map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')}</select><select class="select" id="pathB" style="margin-top:7px">${pathEntities.map((e,i)=>`<option value="${e.id}" ${i===1?'selected':''}>${esc(e.name)}</option>`).join('')}</select><select class="select" id="pathMode" style="margin-top:7px"><option value="shortest">Shortest connection</option><option value="strongest">Strongest relationship</option><option value="event">Shared-event path</option><option value="knowledge">Shared-knowledge path</option></select><button class="solid-btn" id="pathGo" style="width:100%;margin-top:8px">Send signal</button><div class="path-output" id="pathOutput">Choose two entities.</div></div><canvas class="minimap" id="minimap" aria-hidden="true"></canvas><div class="canvas-legend"><span><i class="line-sample"></i> confirmed</span><span><i class="line-sample bad"></i> conflict</span><span><i class="line-sample dash"></i> contextual / inferred</span><span>○ person ◇ event □ knowledge</span></div></div></section>`;
+ app.innerHTML=`<section class="view no-pad"><div class="atlas"><div class="atlas-watermark">CONVERGENCE</div><canvas id="network" aria-label="Interactive relationship network. Use the adjacent controls or accessible views for equivalent information."></canvas><div class="atlas-hud"><button class="chip" data-graph-action="fit">Fit</button><button class="chip" data-graph-action="reset">Reset</button><button class="chip" data-graph-action="labels">Labels ${STATE.labels?'on':'off'}</button><button class="chip phone-hide" data-graph-layer="events">Events</button><button class="chip phone-hide" data-graph-layer="knowledge">Knowledge</button></div><div class="atlas-panel" id="atlasPanel"><button class="atlas-panel-toggle" id="atlasPanelToggle" type="button" aria-expanded="true"><span>Filters & paths</span><b aria-hidden="true">⌃</b></button><div class="kicker">Living system</div><h3>${opts.knowledge?'Knowledge reveal':'Relationship atlas'}</h3><p class="tiny">Tap nodes or edges. Drag to pan. Pinch or wheel to zoom. Filtering and time operate on the same source model used by every other view.</p><div class="atlas-stats"><div class="stat"><b>${CHARACTERS.length}</b><span class="tiny">people</span></div><div class="stat"><b>${RELATIONSHIPS.length}</b><span class="tiny">bonds</span></div><div class="stat"><b>${EVENTS.length}</b><span class="tiny">events</span></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 10px"><span class="tiny"><b id="filterCount">0</b> active filters</span><button class="ghost-btn" id="clearFilters" style="min-height:32px;padding:0 9px">Clear all</button></div><label class="tiny">Entity class<select class="select" id="entityClass"><option value="all">all</option><option value="character">characters</option><option value="group">groups</option><option value="event">events</option><option value="knowledge">knowledge</option></select></label><label class="tiny" style="display:block;margin-top:10px">Character<select class="select" id="characterFilter"><option value="all">all characters</option>${CHARACTERS.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></label><label class="tiny" style="display:block;margin-top:10px">Group<select class="select" id="groupFilter"><option value="all">all groups</option>${GROUPS.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></label><label class="tiny" style="display:block;margin-top:10px">Relationship type<select class="select" id="relType">${relTypes.map(t=>`<option value="${t}">${t}</option>`).join('')}</select></label><label class="tiny" style="display:block;margin-top:10px">Confidence<select class="select" id="confidenceFilter"><option value="all">all confidence states</option><option value="high">confirmed</option><option value="reported">reported</option><option value="inferred">inferred</option></select></label><label class="tiny" style="display:block;margin-top:10px">Conflict<select class="select" id="conflictFilter"><option value="all">show all</option><option value="only">conflict only</option><option value="hide">hide conflict</option></select></label><label class="tiny" style="display:block;margin-top:10px">Minimum strength <span id="strengthOut">1</span><input id="strength" class="range" type="range" min="1" max="10" value="1"></label><label class="tiny" style="display:block;margin-top:10px">Chronology through ${bookLabel(STATE.timelineBook)}<input id="timeScrub" class="range" type="range" min="1" max="6" step="1" value="${STATE.timelineBook}"></label><label class="tiny" style="display:block;margin-top:10px">Focus mode<select class="select" id="focusMode"><option value="full">FULL</option><option value="1hop">1-HOP</option><option value="2hop">2-HOP</option><option value="cluster">CLUSTER</option></select></label><div class="divider"></div><div class="section-title">Path finder</div><select class="select" id="pathA">${pathEntities.map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join('')}</select><select class="select" id="pathB" style="margin-top:7px">${pathEntities.map((e,i)=>`<option value="${e.id}" ${i===1?'selected':''}>${esc(e.name)}</option>`).join('')}</select><select class="select" id="pathMode" style="margin-top:7px"><option value="shortest">Shortest connection</option><option value="strongest">Strongest relationship</option><option value="event">Shared-event path</option><option value="knowledge">Shared-knowledge path</option></select><button class="solid-btn" id="pathGo" style="width:100%;margin-top:8px">Send signal</button><div class="path-output" id="pathOutput">Choose two entities.</div></div><canvas class="minimap" id="minimap" aria-hidden="true"></canvas><div class="canvas-legend"><span><i class="line-sample"></i> confirmed</span><span><i class="line-sample bad"></i> conflict</span><span><i class="line-sample dash"></i> contextual / inferred</span><span>○ person ◇ event □ knowledge</span></div></div></section>`;
  document.getElementById('focusMode').value=STATE.focus;
+ const atlasPanel=document.getElementById('atlasPanel'),atlasPanelToggle=document.getElementById('atlasPanelToggle');
+ const compactAtlas=document.body.classList.contains('phone-shell');
+ if(compactAtlas){atlasPanel.classList.add('collapsed');atlasPanelToggle.setAttribute('aria-expanded','false')}
+ atlasPanelToggle.onclick=()=>{const collapsed=atlasPanel.classList.toggle('collapsed');atlasPanelToggle.setAttribute('aria-expanded',String(!collapsed));if(collapsed)graphApi?.fit()};
  const api=initGraph(document.getElementById('network'),document.getElementById('minimap'),opts);graphApi=api;viewCleanup=api.destroy;
  const relType=document.getElementById('relType'),strength=document.getElementById('strength'),strengthOut=document.getElementById('strengthOut'),timeScrub=document.getElementById('timeScrub'),focus=document.getElementById('focusMode'),entityClass=document.getElementById('entityClass'),characterFilter=document.getElementById('characterFilter'),groupFilter=document.getElementById('groupFilter'),confidenceFilter=document.getElementById('confidenceFilter'),conflictFilter=document.getElementById('conflictFilter'),filterCount=document.getElementById('filterCount');
  const updateFilterCount=()=>{const n=[entityClass.value!=='all',characterFilter.value!=='all',groupFilter.value!=='all',relType.value!=='all',confidenceFilter.value!=='all',conflictFilter.value!=='all',+strength.value>1,+timeScrub.value<6].filter(Boolean).length;filterCount.textContent=n};
@@ -393,12 +685,12 @@ function buildGraph(layer='base'){
  return {nodes,edges};
 }
 function hashNum(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
-function initGraph(canvas,minimap,opts={}){
+function initGraph(canvas,minimap,opts={}){const coarsePointer=matchMedia('(pointer: coarse)').matches;
  const ctx=canvas.getContext('2d');const mini=minimap?.getContext('2d');let layer=opts.knowledge?'knowledge':'base';let data=buildGraph(layer);let nodeMap=new Map();let selected=null;let selectedEdge=null;let revealK=opts.knowledge||null;let path=[];let echoIds=[];let filter={type:'all',min:1,entity:'all',character:'all',group:'all',confidence:'all',conflict:'all'};let timeBook=STATE.timelineBook;let focus=STATE.focus;let cam={x:0,y:0,z:1};let W=1,H=1,dpr=1;let destroyed=false;let raf=0,hiddenTimer=0;let last=0;let fps=0;let frameCount=0,fpsAt=performance.now();let startAt=performance.now();let pointers=new Map();let dragStart=null;let pinchStart=null;let ro=null;
  const centers={core:[0,0],certus:[-250,-80],sent:[180,-150],nether:[270,110],asgard:[80,250],earth:[-260,170],antagonist:[360,-170],order:[-380,-160],events:[0,340],knowledge:[0,-340],team:[-80,40]};
  function assign(){nodeMap=new Map();const used={};data.nodes.forEach((n,i)=>{const c=centers[n.cluster]||[0,0];const h=hashNum(n.id);const a=((h%360)/180)*Math.PI;const ring=60+((h>>8)%140);const count=used[n.cluster]=(used[n.cluster]||0)+1;n.x=c[0]+Math.cos(a)*ring+(count%3)*8;n.y=c[1]+Math.sin(a)*ring+(count%2)*8;n.r=n.type==='character'?22:n.type==='group'?18:n.type==='event'?13:11;nodeMap.set(n.id,n)});}
  assign();
- function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);const maxD=STATE.performance==='full'?2:STATE.performance==='balanced'?1.5:1.15;dpr=Math.min(window.devicePixelRatio||1,maxD);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);if(minimap){const mr=minimap.getBoundingClientRect();minimap.width=Math.max(1,Math.round(mr.width*dpr));minimap.height=Math.max(1,Math.round(mr.height*dpr));mini.setTransform(dpr,0,0,dpr,0,0)}}
+ function resize(){const r=canvas.getBoundingClientRect();W=Math.max(1,r.width);H=Math.max(1,r.height);const maxD=coarsePointer?1.5:(STATE.performance==='full'?2:STATE.performance==='balanced'?1.5:1.15);dpr=Math.min(window.devicePixelRatio||1,maxD);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);if(minimap){const mr=minimap.getBoundingClientRect();minimap.width=Math.max(1,Math.round(mr.width*dpr));minimap.height=Math.max(1,Math.round(mr.height*dpr));mini.setTransform(dpr,0,0,dpr,0,0)}}
  ro=new ResizeObserver(resize);ro.observe(canvas);resize();
  const toScreen=n=>({x:W/2+(n.x+cam.x)*cam.z,y:H/2+(n.y+cam.y)*cam.z});
  const toWorld=(x,y)=>({x:(x-W/2)/cam.z-cam.x,y:(y-H/2)/cam.z-cam.y});
@@ -415,11 +707,11 @@ function initGraph(canvas,minimap,opts={}){
  ctx.shadowBlur=0;const sparseMobile=W<620;if(STATE.labels&&(!sparseMobile||cam.z>1.18||isSel||isPath||isPin||isEcho)&&(cam.z>.62||isSel||isPath||isPin||isEcho)&&n.type!=='knowledge'){ctx.fillStyle='#eaf1fb';ctx.globalAlpha=Math.min(1,alpha*(dim?.35:1));ctx.font=`${isSel?'600 ':''}${Math.max(9,11*cam.z)}px ui-sans-serif`;ctx.textAlign='center';ctx.textBaseline='top';const txt=n.label.length>28?n.label.slice(0,26)+'…':n.label;ctx.fillText(txt,0,r+8)}ctx.restore();n._reveal=null}
  function drawEdge(e,t,alpha=1){if(!visibleEdge(e))return;const a=nodeMap.get(e.source),b=nodeMap.get(e.target);if(!a||!b)return;const A=toScreen(a),B=toScreen(b);ctx.save();ctx.globalAlpha=alpha*(e.membership?.22:e.secondary?.18:.48);ctx.strokeStyle=edgeColor(e);ctx.lineWidth=(e.membership?1:Math.max(1,e.intensity/3))*Math.max(.65,Math.min(1.2,cam.z));if(e.direction==='directional')ctx.setLineDash([7,6]);if(e.status==='historical')ctx.globalAlpha*=.5;if(path.length>1&&path.includes(e.source)&&path.includes(e.target)){ctx.globalAlpha=.95;ctx.strokeStyle='#fff';ctx.lineWidth=3.1;ctx.shadowBlur=12;ctx.shadowColor='#fff'}ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();if(e.type==='conflict'&&!e.secondary&&!e.membership){const mx=(A.x+B.x)/2,my=(A.y+B.y)/2;ctx.strokeStyle='#ff5c73';ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(mx-5,my-5);ctx.lineTo(mx+5,my+5);ctx.moveTo(mx+5,my-5);ctx.lineTo(mx-5,my+5);ctx.stroke()}if(e.direction==='directional'&&cam.z>.75){const ang=Math.atan2(B.y-A.y,B.x-A.x),x=B.x-Math.cos(ang)*22,y=B.y-Math.sin(ang)*22;ctx.fillStyle=edgeColor(e);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-Math.cos(ang-.5)*7,y-Math.sin(ang-.5)*7);ctx.lineTo(x-Math.cos(ang+.5)*7,y-Math.sin(ang+.5)*7);ctx.closePath();ctx.fill()}ctx.restore()}
  function schedule(){if(destroyed||document.hidden)return;raf=requestAnimationFrame(draw)}
- function draw(t){if(destroyed)return;const targetFPS=STATE.motion==='full'?(STATE.performance==='full'?60:STATE.performance==='balanced'?30:12):12;const minDt=1000/targetFPS;if(t-last<minDt){schedule();return}last=t;ctx.clearRect(0,0,W,H);const elapsed=t-startAt;const edgeAlpha=STATE.motion==='off'?1:Math.min(1,Math.max(0,(elapsed-420)/700));data.edges.forEach((e,i)=>drawEdge(e,t,edgeAlpha*Math.min(1,(elapsed-280-i*8)/520)));data.nodes.forEach((n,i)=>{if(visibleNode(n)){const a=STATE.motion==='off'?1:Math.min(1,Math.max(0,(elapsed-40-i*22)/420));drawNode(n,t,a)}});if(path.length>1&&STATE.motion!=='off'){const cycle=(t/1000)%Math.max(1,path.length-1);const idx=Math.floor(cycle);const a=nodeMap.get(path[idx]),b=nodeMap.get(path[idx+1]);if(a&&b){const A=toScreen(a),B=toScreen(b),u=cycle-idx;ctx.fillStyle='#fff';ctx.shadowBlur=18;ctx.shadowColor='#fff';ctx.beginPath();ctx.arc(A.x+(B.x-A.x)*u,A.y+(B.y-A.y)*u,4.2,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}}drawMini();frameCount++;if(t-fpsAt>1000){fps=Math.round(frameCount*1000/(t-fpsAt));frameCount=0;fpsAt=t;if(STATE.perfHud)perfHud.innerHTML=`${fps} fps<br>${data.nodes.filter(visibleNode).length} nodes · ${data.edges.filter(visibleEdge).length} edges<br>DPR ${dpr.toFixed(2)} · ${STATE.performance}<br>${document.hidden?'paused':'active'}`;}schedule()}
+ function draw(t){if(destroyed)return;const targetFPS=STATE.motion==='full'?(coarsePointer?30:(STATE.performance==='full'?60:STATE.performance==='balanced'?30:12)):12;const minDt=1000/targetFPS;if(t-last<minDt){schedule();return}last=t;ctx.clearRect(0,0,W,H);const elapsed=t-startAt;const edgeAlpha=STATE.motion==='off'?1:Math.min(1,Math.max(0,(elapsed-420)/700));data.edges.forEach((e,i)=>drawEdge(e,t,edgeAlpha*Math.min(1,(elapsed-280-i*8)/520)));data.nodes.forEach((n,i)=>{if(visibleNode(n)){const a=STATE.motion==='off'?1:Math.min(1,Math.max(0,(elapsed-40-i*22)/420));drawNode(n,t,a)}});if(path.length>1&&STATE.motion!=='off'){const cycle=(t/1000)%Math.max(1,path.length-1);const idx=Math.floor(cycle);const a=nodeMap.get(path[idx]),b=nodeMap.get(path[idx+1]);if(a&&b){const A=toScreen(a),B=toScreen(b),u=cycle-idx;ctx.fillStyle='#fff';ctx.shadowBlur=18;ctx.shadowColor='#fff';ctx.beginPath();ctx.arc(A.x+(B.x-A.x)*u,A.y+(B.y-A.y)*u,4.2,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}}drawMini();frameCount++;if(t-fpsAt>1000){fps=Math.round(frameCount*1000/(t-fpsAt));frameCount=0;fpsAt=t;if(STATE.perfHud)perfHud.innerHTML=`${fps} fps<br>${data.nodes.filter(visibleNode).length} nodes · ${data.edges.filter(visibleEdge).length} edges<br>DPR ${dpr.toFixed(2)} · ${STATE.performance}<br>${document.hidden?'paused':'active'}`;}schedule()}
  function drawMini(){if(!mini||!minimap||getComputedStyle(minimap).display==='none')return;const mw=minimap.clientWidth,mh=minimap.clientHeight;mini.clearRect(0,0,mw,mh);const ns=data.nodes.filter(visibleNode);if(!ns.length)return;const xs=ns.map(n=>n.x),ys=ns.map(n=>n.y),minx=Math.min(...xs)-80,maxx=Math.max(...xs)+80,miny=Math.min(...ys)-80,maxy=Math.max(...ys)+80;const sx=mw/(maxx-minx),sy=mh/(maxy-miny),s=Math.min(sx,sy);ns.forEach(n=>{mini.fillStyle=n.color;mini.globalAlpha=.55;mini.beginPath();mini.arc((n.x-minx)*s,(n.y-miny)*s,2.5,0,Math.PI*2);mini.fill()});mini.globalAlpha=1;const tl=toWorld(0,0),br=toWorld(W,H);mini.strokeStyle='rgba(255,255,255,.5)';mini.strokeRect((tl.x-minx)*s,(tl.y-miny)*s,(br.x-tl.x)*s,(br.y-tl.y)*s)}
- function hitNode(x,y){let best=null,d=Infinity;data.nodes.forEach(n=>{if(!visibleNode(n))return;const p=toScreen(n),dd=Math.hypot(x-p.x,y-p.y);if(dd<Math.max(24,n.r*cam.z+10)&&dd<d){best=n;d=dd}});return best}
+ function hitNode(x,y){let best=null,d=Infinity;data.nodes.forEach(n=>{if(!visibleNode(n))return;const p=toScreen(n),dd=Math.hypot(x-p.x,y-p.y);if(dd<Math.max(coarsePointer?30:24,n.r*cam.z+(coarsePointer?14:10))&&dd<d){best=n;d=dd}});return best}
  function segDist(px,py,x1,y1,x2,y2){const dx=x2-x1,dy=y2-y1,l=dx*dx+dy*dy;if(!l)return Math.hypot(px-x1,py-y1);let t=((px-x1)*dx+(py-y1)*dy)/l;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(x1+t*dx),py-(y1+t*dy))}
- function hitEdge(x,y){let best=null,d=12;data.edges.forEach(e=>{if(!visibleEdge(e)||e.membership||e.secondary)return;const a=nodeMap.get(e.source),b=nodeMap.get(e.target),A=toScreen(a),B=toScreen(b),dd=segDist(x,y,A.x,A.y,B.x,B.y);if(dd<d){best=e;d=dd}});return best}
+ function hitEdge(x,y){let best=null,d=coarsePointer?18:12;data.edges.forEach(e=>{if(!visibleEdge(e)||e.membership||e.secondary)return;const a=nodeMap.get(e.source),b=nodeMap.get(e.target),A=toScreen(a),B=toScreen(b),dd=segDist(x,y,A.x,A.y,B.x,B.y);if(dd<d){best=e;d=dd}});return best}
  function pointerPos(ev){const r=canvas.getBoundingClientRect();return {x:ev.clientX-r.left,y:ev.clientY-r.top}}
  canvas.addEventListener('pointerdown',ev=>{canvas.setPointerCapture(ev.pointerId);const p=pointerPos(ev);pointers.set(ev.pointerId,p);if(pointers.size===1)dragStart={...p,camX:cam.x,camY:cam.y,moved:false};if(pointers.size===2){const [a,b]=[...pointers.values()];pinchStart={d:Math.hypot(a.x-b.x,a.y-b.y),z:cam.z}}canvas.classList.add('dragging')});
  canvas.addEventListener('pointermove',ev=>{if(!pointers.has(ev.pointerId))return;const p=pointerPos(ev);pointers.set(ev.pointerId,p);if(pointers.size===2&&pinchStart){const [a,b]=[...pointers.values()];const d=Math.hypot(a.x-b.x,a.y-b.y);cam.z=Math.max(.28,Math.min(3.1,pinchStart.z*d/pinchStart.d));return}if(pointers.size===1&&dragStart){const dx=p.x-dragStart.x,dy=p.y-dragStart.y;if(Math.hypot(dx,dy)>4)dragStart.moved=true;cam.x=dragStart.camX+dx/cam.z;cam.y=dragStart.camY+dy/cam.z}});
