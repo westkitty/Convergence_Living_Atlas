@@ -45,3 +45,11 @@ The dedicated Drive folder is currently empty. Broad Drive search produced unrel
 ## Performance decision
 
 The cover sprite remains the production visual source because it gives the asset-led experience at roughly 21 KB total transfer and avoids six additional image requests. No external image CDN or runtime dependency was introduced.
+
+
+## Regression protection added
+
+The project now carries repository-native validation for the asset-led uplift:
+- `scripts/validate.mjs` parses the production inline JavaScript and asserts asset integration, spoiler-scope guards, reduced-motion/accessibility invariants, and absence of external runtime dependencies.
+- `scripts/smoke.sh` serves the real repository and exercises Overview, Book Lens, Timeline, and Atlas in headless Chromium while verifying the cover sprite is fetchable.
+- `.github/workflows/quality.yml` runs both checks on pushes and pull requests.
