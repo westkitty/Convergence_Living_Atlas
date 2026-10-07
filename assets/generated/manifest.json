@@ -1,0 +1,46 @@
+{
+  "source": {
+    "verified_path": "/Users/andrew/Library/CloudStorage/GoogleDrive-digitalghosts269@gmail.com/My Drive/macbook/converge",
+    "verified_host": "MacBook-Air.local",
+    "image_count": 131,
+    "directories": [
+      "Oct 07 - 00_03",
+      "convergence_character_images",
+      "Convergence_Living_Atlas_All_Generated_Images"
+    ],
+    "verified_at": "2026-10-07"
+  },
+  "production": {
+    "format": "webp",
+    "count": 25,
+    "approx_bundle_mib": 2.8,
+    "quality": 78
+  },
+  "assets": {
+    "hero.webp": "Oct 07 - 00_03/Website_banner_for_Convergence_L…_20261007001427.jpg",
+    "atlas-bg.webp": "Oct 07 - 00_03/Background_illustration_for_netw…_20261007001427_2.jpg",
+    "relationships.webp": "Oct 07 - 00_03/Abstract_relationship_banner_design_20261007001427.jpg",
+    "characters.webp": "Oct 07 - 00_03/Characters_banner_for_Convergenc…_20261007001427.jpg",
+    "timeline.webp": "Oct 07 - 00_03/Create_timeline_banner_landscape_20261007001427.jpg",
+    "events.webp": "Oct 07 - 00_03/Create_network_banner_for_events_20261007001427.jpg",
+    "groups.webp": "Oct 07 - 00_03/Create_faction_banner_graphic_20261007001427.jpg",
+    "contradictions.webp": "Oct 07 - 00_03/Create_section_banner_for_contra…_20261007001427.jpg",
+    "compare.webp": "Oct 07 - 00_03/Design_banner_for_Compare_view_20261007001427.jpg",
+    "archive.webp": "Oct 07 - 00_03/Website_banner_design_of_archive_20261007001427.jpg",
+    "evidence.webp": "Oct 07 - 00_03/Evidence_table_with_glowing_strings_20261007001427.jpg",
+    "keys.webp": "Oct 07 - 00_03/Fourteen_keys_banner_design_20261007001427_2.jpg",
+    "kaz-duke.webp": "Oct 07 - 00_03/Kaz_and_dog_facing_threat_20261007001427.jpg",
+    "paris.webp": "Oct 07 - 00_03/Survivors_observing_silent_Paris…_20261007001427_2.jpg",
+    "cosmic.webp": "Oct 07 - 00_03/Cosmic_information_art_banner_20261007001427.jpg",
+    "app-icon.webp": "Oct 07 - 00_03/App_icon_design_for_Convergence_20261007001427.jpg",
+    "annie.webp": "convergence_character_images/annie_among_the_violet_ruins.png",
+    "azib.webp": "convergence_character_images/defiant_jinn_in_a_shattered_emerald_palace.png",
+    "boots.webp": "convergence_character_images/mister_boots_and_the_astral_ruins.png",
+    "sentinel.webp": "convergence_character_images/golden_sentinel_in_the_ruined_wasteland.png",
+    "guardian.webp": "convergence_character_images/guardian_of_the_blue_ruins.png",
+    "recon.webp": "convergence_character_images/neon_recon_in_the_ruins.png",
+    "anomaly.webp": "convergence_character_images/orange_anomaly_investigator.png",
+    "tactical.webp": "convergence_character_images/tactical_route_through_ruins.png",
+    "temporal.webp": "convergence_character_images/temporal_warrior_amidst_ruins.png"
+  }
+}
