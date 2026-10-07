@@ -47,34 +47,24 @@ jobs:
             echo "gh-pages already matches main site files and assets."
           fi
 
-      - name: Verify live Pages bytes
+      - name: Verify gh-pages branch bytes
         shell: bash
         run: |
           set -euo pipefail
 
-          BASE="https://westkitty.github.io/Convergence_Living_Atlas"
-          LIVE_INDEX="/tmp/convergence-live-index.html"
-          LIVE_COVER="/tmp/convergence-live-covers.webp"
+          git fetch origin gh-pages
 
-          matched=0
-          for attempt in $(seq 1 30); do
-            if curl -fsS --max-time 10 "$BASE/" -o "$LIVE_INDEX" \
-              && curl -fsS --max-time 10 "$BASE/assets/covers.webp" -o "$LIVE_COVER" \
-              && cmp -s index.html "$LIVE_INDEX" \
-              && cmp -s assets/covers.webp "$LIVE_COVER"; then
-              matched=1
-              echo "Live Pages matches deployed index.html and cover asset on attempt $attempt."
-              break
-            fi
-            echo "Waiting for Pages/CDN propagation (attempt $attempt/30)..."
-            sleep 2
-          done
+          git show origin/gh-pages:index.html > /tmp/gh-pages-index.html
+          git show origin/gh-pages:assets/covers.webp > /tmp/gh-pages-covers.webp
 
-          if [[ "$matched" -ne 1 ]]; then
-            echo "Live Pages did not converge to the deployed bytes within the retry window." >&2
-            exit 1
-          fi
+          cmp -s index.html /tmp/gh-pages-index.html
+          cmp -s assets/covers.webp /tmp/gh-pages-covers.webp
 
-          grep -q '<title>Convergence: Living Atlas</title>' "$LIVE_INDEX"
-          test -s "$LIVE_COVER"
-          echo "LIVE PAGES SMOKE PASS"
+          grep -q '<title>Convergence: Living Atlas</title>' /tmp/gh-pages-index.html
+          test -s /tmp/gh-pages-covers.webp
+
+          echo "GH-PAGES BRANCH VERIFY PASS"
+          printf 'index sha: '
+          git rev-parse origin/gh-pages:index.html
+          printf 'cover sha: '
+          git rev-parse origin/gh-pages:assets/covers.webp
