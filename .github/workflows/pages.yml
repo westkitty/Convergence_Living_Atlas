@@ -99,10 +99,18 @@ jobs:
           BASE="https://westkitty.github.io/Convergence_Living_Atlas"
           LIVE_INDEX="/tmp/convergence-live-index.html"
           LIVE_COVER="/tmp/convergence-live-covers.webp"
+          LIVE_HERO="/tmp/convergence-live-hero.webp"
+          LIVE_ATLAS="/tmp/convergence-live-atlas-bg.webp"
 
           matched=0
           for attempt in $(seq 1 60); do
-            if curl -fsS --max-time 10 "$BASE/" -o "$LIVE_INDEX"               && curl -fsS --max-time 10 "$BASE/assets/covers.webp" -o "$LIVE_COVER"               && cmp -s index.html "$LIVE_INDEX"               && cmp -s assets/covers.webp "$LIVE_COVER"; then
+            if curl -fsS --max-time 10 "$BASE/" -o "$LIVE_INDEX"               && curl -fsS --max-time 10 "$BASE/assets/covers.webp" -o "$LIVE_COVER" \
+              && curl -fsS --max-time 10 "$BASE/assets/generated/hero.webp" -o "$LIVE_HERO" \
+              && curl -fsS --max-time 10 "$BASE/assets/generated/atlas-bg.webp" -o "$LIVE_ATLAS" \
+              && cmp -s index.html "$LIVE_INDEX" \
+              && cmp -s assets/covers.webp "$LIVE_COVER" \
+              && cmp -s assets/generated/hero.webp "$LIVE_HERO" \
+              && cmp -s assets/generated/atlas-bg.webp "$LIVE_ATLAS"; then
               matched=1
               echo "Live Pages matches production HTML and cover asset on attempt $attempt."
               break
@@ -129,5 +137,9 @@ jobs:
           grep -q 'id="scopeBtn"' "$LIVE_INDEX"
           grep -q 'assets/covers.webp' "$LIVE_INDEX"
           test -s "$LIVE_COVER"
+          test -s "$LIVE_HERO"
+          test -s "$LIVE_ATLAS"
+          grep -q 'assets/generated/hero.webp' "$LIVE_INDEX"
+          grep -q 'assets/generated/atlas-bg.webp' "$LIVE_INDEX"
 
-          echo "LIVE PAGES ASSET VERIFY PASS"
+          echo "LIVE PAGES GDRIVE ASSET VERIFY PASS"

@@ -14,7 +14,11 @@ for _ in {1..30}; do
 done
 
 curl -fsS "http://127.0.0.1:$PORT/assets/covers.webp" >/tmp/convergence-covers.webp
+curl -fsS "http://127.0.0.1:$PORT/assets/generated/hero.webp" >/tmp/convergence-hero.webp
+curl -fsS "http://127.0.0.1:$PORT/assets/generated/atlas-bg.webp" >/tmp/convergence-atlas-bg.webp
 test -s /tmp/convergence-covers.webp
+test -s /tmp/convergence-hero.webp
+test -s /tmp/convergence-atlas-bg.webp
 
 BROWSER=""
 for candidate in google-chrome google-chrome-stable chromium chromium-browser; do
@@ -37,6 +41,8 @@ dump() {
 OVERVIEW="$(dump overview)"
 grep -q 'Six covers. One widening architecture.' <<<"$OVERVIEW"
 grep -q 'Enter relationship atlas' <<<"$OVERVIEW"
+grep -q 'generated-hero-art' <<<"$OVERVIEW"
+grep -q 'Visual archive' <<<"$OVERVIEW"
 
 BOOK="$(dump book/1)"
 grep -q 'asset-driven dossier' <<<"$BOOK"
@@ -48,5 +54,7 @@ grep -q 'Time changes the network' <<<"$TIMELINE"
 ATLAS="$(dump atlas)"
 grep -q 'Relationship atlas' <<<"$ATLAS"
 grep -q 'network' <<<"$ATLAS"
+grep -q 'gdrive-atlas-art' <<<"$ATLAS"
+grep -q 'generated-atlas-scene' <<<"$ATLAS"
 
 echo "BROWSER SMOKE PASS"

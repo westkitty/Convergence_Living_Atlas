@@ -39,6 +39,18 @@ for (const [needle, label] of required) assert(html.includes(needle), label);
 const coverRefs = (html.match(/assets\/covers\.webp/g) || []).length;
 assert(coverRefs >= 5, 'cover sprite must be used across multiple surfaces');
 
+const generatedAssets = ["hero.webp","atlas-bg.webp","characters.webp","relationships.webp","timeline.webp","events.webp","groups.webp","contradictions.webp","compare.webp","archive.webp","evidence.webp","keys.webp","kaz-duke.webp","paris.webp","cosmic.webp","app-icon.webp","annie.webp","azib.webp","boots.webp","sentinel.webp","guardian.webp","recon.webp","anomaly.webp","tactical.webp","temporal.webp"];
+for (const file of generatedAssets) {
+  const path = 'assets/generated/' + file;
+  assert(fs.existsSync(path), 'missing generated asset: ' + path);
+  assert(fs.statSync(path).size > 10_000, 'generated asset unexpectedly small: ' + path);
+}
+const integratedAssets = ["hero.webp","atlas-bg.webp","characters.webp","relationships.webp","timeline.webp","events.webp","groups.webp","contradictions.webp","compare.webp","archive.webp","evidence.webp","keys.webp","kaz-duke.webp","paris.webp","cosmic.webp","app-icon.webp","annie.webp","azib.webp","boots.webp"];
+for (const file of integratedAssets) assert(html.includes(file), 'generated production asset is not wired into HTML: ' + file);
+assert(html.includes("gdriveAsset('atlas-bg.webp')"), 'Atlas must render the verified generated background');
+assert(html.includes("gdriveAsset('hero.webp')"), 'Overview must render the verified generated hero');
+assert(html.includes('generated-gallery'), 'Overview visual archive must exist');
+
 const externalScripts = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map(m => m[1]);
 assert(externalScripts.length === 0, 'no external runtime script dependencies');
 
@@ -51,6 +63,8 @@ console.log('VALIDATION PASS');
 console.log(JSON.stringify({
   bytes: Buffer.byteLength(html),
   coverRefs,
+  generatedAssets: generatedAssets.length,
+  integratedAssets: integratedAssets.length,
   externalScripts: externalScripts.length,
   externalUrls: externalUrls.length
 }, null, 2));

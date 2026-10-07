@@ -2,54 +2,58 @@
 
 Snapshot: 2026-10-07
 
-## Source surfaces inspected
+## Corrected source of truth
 
-- GitHub repository `westkitty/Convergence_Living_Atlas`
-- Connected Drive folder `Convergence Living Atlas`
-- Parent project Drive surface and targeted searches for Convergence / Craig Alanson / book-title imagery
-- Six supplied book-cover images extracted from the provided book materials
+The generated visual corpus is present on the MacBook's mounted Google Drive at:
 
-The dedicated Drive folder is currently empty. Broad Drive search produced unrelated images from other projects; those were deliberately **not** imported. The six supplied covers are therefore the confirmed visual asset family governing this pass.
+`/Users/andrew/Library/CloudStorage/GoogleDrive-digitalghosts269@gmail.com/My Drive/macbook/converge`
 
-## Confirmed cover family
+This path was verified directly on `MacBook-Air.local`. The previous audit statement that the relevant Drive folder was empty was wrong and is superseded by this document.
 
-| Book | Source dimensions | Source weight | Derived palette | Current role |
-| --- | ---: | ---: | --- | --- |
-| Convergence | 696×900 | 78,869 B | #261947 · #422852 · #7e5064 | hero, book lens, scope picker, character provenance, timeline/event texture |
-| Dragonslayer | 696×900 | 101,077 B | #251e45 · #6f82ab · #363a64 | book lens, scope picker, progression, timeline/event texture |
-| First Strike | 696×900 | 70,478 B | #161d3d · #183068 · #4b6fae | book lens, scope picker, progression, timeline/event texture |
-| Recon | 696×900 | 101,954 B | #482607 · #683205 · #7b490d | book lens, scope picker, progression, timeline/event texture |
-| Desperate Measures | 696×900 | 103,866 B | #67633d · #7f7d51 · #49381b | book lens, scope picker, progression, timeline/event texture |
-| Dead World | 696×900 | 84,492 B | #606675 · #505364 | book lens, scope picker, progression, timeline/event texture |
+## Verified corpus
 
-## Runtime asset
+The source tree contains **131 images** across the three project directories below:
 
-`assets/covers.webp` is a 900×194, 20,986-byte WebP sprite containing all six supplied covers. The site intentionally uses one cached request instead of loading six separate full-resolution images.
+- `Oct 07 - 00_03/` — project-specific banners, emblems, icons, timeline/event/relationship/contradiction imagery, Kaz + Duke scenes, Paris scenes, evidence imagery, and other UI art.
+- `convergence_character_images/` — generated character and role imagery, including explicit Annie, Azib, and Mister Boots assets.
+- `Convergence_Living_Atlas_All_Generated_Images/` — wider cinematic, archive, character-lineup, ruin, and cosmic scene imagery.
 
-## Asset opportunity matrix
+## Production curation
 
-| Asset use | Before | After |
-| --- | --- | --- |
-| Hero identity | cover fan only | cover fan + intro cover strip |
-| Book navigation | decorative tiles | first-class Book Lens routes |
-| Spoiler scope | text-only selector | visual cover selector with asset mood |
-| Character index | no source-art cue | first-book cover watermark |
-| Character dossier | sigil only | source-book cover + sigil |
-| Timeline | plain cards | per-book cover texture |
-| Event index | plain cards | per-book cover texture |
-| Knowledge | plain proposition cards | source-book cover texture |
-| Contradictions | generic cards | source-book cover texture |
-| Inspectors | text-only | cover provenance thumbnail |
-| Methodology | text-only corpus list | clickable cover thumbnails |
+The live repository carries a deliberately curated **25-image WebP production pack** under `assets/generated/`, approximately **2.8 MiB total** after optimization. The originals remain untouched in Google Drive.
 
-## Performance decision
+The production pack drives visible UI surfaces rather than merely existing in the repository:
 
-The cover sprite remains the production visual source because it gives the asset-led experience at roughly 21 KB total transfer and avoids six additional image requests. No external image CDN or runtime dependency was introduced.
+| Surface | Generated production art |
+| --- | --- |
+| Global brand mark | `app-icon.webp` |
+| Overview hero | `hero.webp` |
+| Overview visual archive | Kaz+Duke, Paris, Keys, evidence, factions, archive, cosmic, character network |
+| Relationship Atlas canvas | `atlas-bg.webp` |
+| Atlas inspector panel | `kaz-duke.webp` |
+| Characters | `characters.webp` plus explicit Annie/Azib/Boots/Kaz+Duke imagery |
+| Relationships | `relationships.webp` |
+| Knowledge | `evidence.webp` |
+| Timeline | `timeline.webp` |
+| Events | `events.webp` |
+| Groups | `groups.webp` |
+| Contradictions | `contradictions.webp` |
+| Compare | `compare.webp` |
+| Field Archive | `archive.webp` |
+| Source / methodology | `cosmic.webp` |
 
+Role-based generated images that are not unambiguously named in the source corpus are retained as production assets without falsely assigning them to a specific named character.
 
-## Regression protection added
+## Book-cover family
 
-The project now carries repository-native validation for the asset-led uplift:
-- `scripts/validate.mjs` parses the production inline JavaScript and asserts asset integration, spoiler-scope guards, reduced-motion/accessibility invariants, and absence of external runtime dependencies.
-- `scripts/smoke.sh` serves the real repository and exercises Overview, Book Lens, Timeline, and Atlas in headless Chromium while verifying the cover sprite is fetchable.
-- `.github/workflows/quality.yml` runs both checks on pushes and pull requests.
+`assets/covers.webp` remains the compact six-cover sprite used for book provenance, Book Lens navigation, spoiler scope, and book-level chronology. It complements rather than replaces the generated Drive corpus.
+
+## Performance and delivery
+
+- Generated originals were copied read-only from the mounted Google Drive source and converted to WebP at quality 78.
+- Production pack size is about 2.8 MiB instead of shipping the entire high-resolution 131-image corpus.
+- Hero and Atlas background are preloaded; secondary art uses lazy image loading where appropriate.
+- No external image CDN or runtime dependency is introduced.
+- Static validation requires every curated production asset to exist, exceed a minimum size, and be referenced by production HTML.
+- Browser smoke tests prove the Overview and Atlas render generated-art elements.
+- Pages delivery verifies the live public hero and Atlas background bytes against the repository source.
