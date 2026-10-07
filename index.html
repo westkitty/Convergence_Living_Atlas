@@ -382,6 +382,98 @@ body.phone-landscape .generated-art-banner{height:150px}
   body.phone-shell .hero-actions>:first-child{grid-column:auto}
 }
 
+
+/* === 25-WAY WOW UPLIFT === */
+:root{--glass-blur:22px;--glass-sat:135%;--glass-bg:rgba(15,22,34,.58);--glass-edge:rgba(255,255,255,.16);--glass-inner:rgba(255,255,255,.065);--world-accent:#ff7656;--world-accent2:#68d5ff;--motion-scale:1}
+html{background:#05070a}
+body::before,body::after{content:"";position:fixed;inset:-22vmax;pointer-events:none;z-index:-2}
+body::before{background:radial-gradient(circle at 18% 24%,color-mix(in srgb,var(--world-accent) 18%,transparent),transparent 31%),radial-gradient(circle at 76% 58%,color-mix(in srgb,var(--world-accent2) 15%,transparent),transparent 34%),conic-gradient(from 210deg at 50% 50%,transparent,rgba(117,94,255,.055),transparent 35%);animation:ambientDrift calc(34s * var(--motion-scale)) ease-in-out infinite alternate;will-change:transform}
+body::after{z-index:-1;opacity:.18;background-image:url("assets/generated/atlas-bg.webp");background-size:cover;background-position:center;filter:blur(46px) saturate(1.1);transform:scale(1.18)}
+@keyframes ambientDrift{to{transform:translate3d(4vmax,-2vmax,0) rotate(4deg) scale(1.03)}}
+body.fx-paused::before,.fx-paused *{animation-play-state:paused!important}
+.glass,.topbar,.rail,.atlas-panel,.canvas-legend,.sheet,.palette,.mobile-nav,.uplift-dock,.uplift-panel,.uplift-lightbox-inner{background:linear-gradient(145deg,rgba(255,255,255,.055),transparent 42%),var(--glass-bg)!important;border-color:var(--glass-edge)!important;-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));box-shadow:inset 0 1px 0 var(--glass-inner),0 22px 70px rgba(0,0,0,.34)}
+.card{background:linear-gradient(155deg,rgba(255,255,255,.055),transparent 38%),rgba(13,20,31,.62);border-color:rgba(255,255,255,.11);-webkit-backdrop-filter:blur(13px) saturate(120%);backdrop-filter:blur(13px) saturate(120%);contain:layout paint style;content-visibility:auto;contain-intrinsic-size:280px}
+.card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 26px 80px color-mix(in srgb,var(--world-accent) 10%,rgba(0,0,0,.45))}
+button,.chip,[role="button"],.char-card,.time-card,.knowledge-card,.generated-gallery-card{transition:transform .16s var(--ease),box-shadow .2s,border-color .2s,background .2s,filter .2s}
+.press-feedback{transform:scale(.972)!important;filter:brightness(1.12)}
+body[data-quality="balanced"]{--glass-blur:16px;--motion-scale:1.35}
+body[data-quality="reduced"]{--glass-blur:8px;--motion-scale:3}
+body[data-quality="reduced"]::after{display:none}
+body[data-quality="reduced"] .orb,body[data-quality="reduced"] .portal-particle,body[data-quality="reduced"] .intro-shard{animation:none!important}
+.page-head h2,.hero-title,.home-hero h2{view-transition-name:atlas-title}
+.generated-dossier-portrait,.generated-card-art,.generated-art-banner img{view-transition-name:atlas-art}
+::view-transition-old(root){animation:vtOut .28s ease both}
+::view-transition-new(root){animation:vtIn .42s var(--ease) both}
+@keyframes vtOut{to{opacity:.2;transform:scale(.985);filter:blur(5px)}}
+@keyframes vtIn{from{opacity:.15;transform:scale(1.018);filter:blur(8px)}}
+body[data-transition="nether"]::view-transition-new(root){animation:netherIn .52s cubic-bezier(.16,.85,.22,1)}
+body[data-transition="history"]::view-transition-new(root){animation:historyIn .5s ease}
+body[data-transition="dead"]::view-transition-new(root){animation:deadIn .65s ease}
+@keyframes netherIn{from{opacity:0;transform:perspective(900px) rotateY(-4deg) scale(1.03);filter:hue-rotate(35deg) blur(12px)}}
+@keyframes historyIn{from{opacity:.08;transform:translateX(16px);filter:sepia(.7) blur(8px)}}
+@keyframes deadIn{from{opacity:0;filter:grayscale(1) contrast(1.45) blur(10px)}}
+body.book-world-1{--world-accent:#b96cff;--world-accent2:#ff667d}
+body.book-world-2{--world-accent:#63c7ff;--world-accent2:#8296ce}
+body.book-world-3{--world-accent:#5e82ff;--world-accent2:#61b9ff}
+body.book-world-4{--world-accent:#ffab45;--world-accent2:#67e7c8}
+body.book-world-5{--world-accent:#d2c35e;--world-accent2:#8f854f}
+body.book-world-6{--world-accent:#9ea8bd;--world-accent2:#767c8f}
+body.dead-world{filter:saturate(.72)}
+body.dead-world::before{animation-duration:90s;opacity:.42}
+body.duke-mode{--world-accent:#f4c95d;--world-accent2:#c58c52}
+body.duke-mode .card{border-color:rgba(244,201,93,.18)}
+body.duke-mode [data-char="duke"]{box-shadow:0 0 0 1px rgba(244,201,93,.4),0 0 44px rgba(244,201,93,.18)}
+.type-reveal .type-unit{display:inline-block;opacity:0;transform:translateY(.42em);filter:blur(8px);animation:typeUnitIn .48s var(--ease) forwards;animation-delay:calc(var(--i) * 32ms)}
+@keyframes typeUnitIn{to{opacity:1;transform:none;filter:none}}
+.archive-status{position:fixed;left:50%;top:calc(var(--safe-top) + 74px);z-index:135;transform:translateX(-50%) translateY(-10px);opacity:0;pointer-events:none;padding:8px 12px;border:1px solid rgba(104,213,255,.2);border-radius:999px;background:rgba(6,12,18,.8);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font:700 9px/1.2 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#a9dff1;transition:.25s}
+.archive-status.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.portal-core{position:absolute;left:50%;top:50%;width:min(58vmin,440px);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.portal-core::before,.portal-core::after{content:"";position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(125,194,255,.26);box-shadow:0 0 55px rgba(104,213,255,.16),inset 0 0 80px rgba(216,137,255,.12);animation:portalBreathe 4.2s ease-in-out infinite alternate}
+.portal-core::after{inset:24%;border-color:rgba(255,107,69,.26);animation-delay:-1.3s;animation-duration:3.1s}
+@keyframes portalBreathe{to{transform:scale(1.09) rotate(9deg);filter:hue-rotate(16deg);box-shadow:0 0 90px rgba(104,213,255,.28),inset 0 0 95px rgba(216,137,255,.17)}}
+.intro-shards{position:absolute;inset:0;pointer-events:none}
+.intro-shard{position:absolute;left:50%;top:50%;width:clamp(22px,6vw,62px);height:6px;border-radius:999px;background:var(--sc);box-shadow:0 0 30px var(--sc);transform:translate(-50%,-50%) rotate(var(--a)) translateX(28vmin);opacity:0;animation:shardConverge 7.8s var(--ease) var(--d) both}
+@keyframes shardConverge{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(43vmin) scaleX(.2)}22%{opacity:.9}66%{transform:translate(-50%,-50%) rotate(var(--a)) translateX(18vmin) scaleX(1)}100%{opacity:.12;transform:translate(-50%,-50%) rotate(var(--a)) translateX(3vmin) scaleX(.18)}}
+.intro .intro-title{animation-duration:10s!important}
+.atlas::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(circle at 32% 42%,rgba(104,213,255,.08),transparent 10%),radial-gradient(circle at 67% 58%,rgba(216,137,255,.07),transparent 12%);mix-blend-mode:screen;animation:atlasBreath 7s ease-in-out infinite alternate}
+@keyframes atlasBreath{to{opacity:.48;transform:scale(1.03)}}
+.relationship-pulse{animation:relPulse .85s var(--ease) both;animation-delay:var(--delay,0ms)}
+@keyframes relPulse{0%{transform:scale(.97);box-shadow:0 0 0 rgba(104,213,255,0)}55%{transform:scale(1.015);box-shadow:0 0 42px rgba(104,213,255,.18)}100%{transform:none}}
+.knowledge-propagating .status-tag{animation:knowledgeWave .9s var(--ease) both;animation-delay:var(--delay,0ms)}
+@keyframes knowledgeWave{0%{opacity:.2;transform:translateX(-8px);filter:blur(4px)}55%{opacity:1;box-shadow:0 0 24px currentColor}100%{transform:none;filter:none}}
+.uplift-dock{position:fixed;left:50%;bottom:calc(18px + var(--safe-bottom));transform:translateX(-50%);z-index:58;display:flex;gap:4px;padding:6px;border:1px solid var(--glass-edge);border-radius:19px;max-width:calc(100vw - 20px)}
+.uplift-dock button{min-width:42px;min-height:42px;border:0;border-radius:13px;background:transparent;padding:0 10px;font-size:10px;color:#c8d5e6;display:flex;align-items:center;gap:6px;justify-content:center}
+.uplift-dock button:hover,.uplift-dock button.active{background:rgba(255,255,255,.075);color:#fff}
+.uplift-dock b{font-size:16px}
+.uplift-panel{position:fixed;inset:calc(var(--safe-top) + 12px) 12px calc(var(--safe-bottom) + 12px);z-index:155;border:1px solid var(--glass-edge);border-radius:28px;overflow:auto;padding:20px;display:none}
+.uplift-panel.open{display:block;animation:panelIn .35s var(--ease)}
+@keyframes panelIn{from{opacity:0;transform:translateY(12px) scale(.99)}}
+.uplift-panel-close{position:sticky;top:0;float:right;z-index:4}
+.uplift-panel h2{font:500 clamp(38px,7vw,78px)/.92 Georgia,serif;margin:36px 0 14px}
+.uplift-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.uplift-stat{padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.035)}
+.journey-scroll{height:min(68vh,650px);overflow:auto;scroll-snap-type:y mandatory;border-radius:22px}
+.journey-step{min-height:60vh;scroll-snap-align:center;display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.7fr);gap:22px;align-items:center;padding:clamp(24px,6vw,70px);position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08)}
+.journey-step::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 45%,color-mix(in srgb,var(--jc) 20%,transparent),transparent 38%);pointer-events:none}
+.journey-step h3{font:500 clamp(35px,6vw,70px)/.92 Georgia,serif;margin:8px 0}
+.journey-step img{width:100%;max-height:38vh;object-fit:cover;border-radius:18px;border:1px solid rgba(255,255,255,.12)}
+.world-viz{position:relative;height:min(62vh,570px);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#0a1420 0 44%,#020306 44% 56%,#1c1028 56% 100%)}
+.world-viz .earth-label,.world-viz .nether-label{position:absolute;left:24px;font:500 clamp(34px,6vw,70px) Georgia,serif;opacity:.72}.earth-label{top:12%}.nether-label{bottom:12%}.barrier-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:700 9px ui-monospace;letter-spacing:.25em;color:#9cacbd}
+.portal-tear{position:absolute;left:var(--x);top:18%;width:2px;height:64%;background:linear-gradient(transparent,#fff 18%,#a6dfff 44%,#ff8b70 58%,transparent);box-shadow:0 0 18px #68d5ff;animation:tearPulse 2.4s ease-in-out infinite alternate;animation-delay:var(--d)}
+@keyframes tearPulse{to{transform:scaleX(4);filter:hue-rotate(30deg);opacity:.55}}
+.change-column h3{font:500 28px Georgia,serif}.change-list{display:grid;gap:8px}.change-item{padding:10px 12px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:rgba(255,255,255,.025)}
+.asset-vault{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.asset-vault figure{margin:0;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03)}
+.asset-vault img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}.asset-vault figcaption{padding:9px;font-size:10px;color:#aab7c8}
+.uplift-lightbox{position:fixed;inset:0;z-index:180;display:none;place-items:center;background:rgba(0,0,0,.72);padding:18px}
+.uplift-lightbox.open{display:grid}.uplift-lightbox-inner{position:relative;max-width:min(1200px,96vw);max-height:92vh;border:1px solid var(--glass-edge);border-radius:24px;padding:10px;overflow:hidden}
+.uplift-lightbox img{display:block;max-width:100%;max-height:86vh;object-fit:contain;border-radius:17px}
+.uplift-lightbox button{position:absolute;right:16px;top:16px;z-index:3}
+.generated-art-banner,.generated-gallery-card,.record-art{cursor:zoom-in}
+@media(max-width:720px){.uplift-dock{bottom:calc(8px + var(--safe-bottom));width:calc(100vw - 16px);justify-content:space-between;border-radius:20px}.uplift-dock button{padding:0 7px;flex:1}.uplift-dock button span{display:none}.mobile-nav{display:none!important}.sheet{left:8px!important;right:8px!important;width:auto!important;top:auto!important;height:65vh;bottom:calc(8px + var(--safe-bottom));border-radius:24px}.sheet.peek{height:35vh}.sheet.half{height:65vh}.sheet.full{height:92vh}.journey-step{grid-template-columns:1fr;padding:28px 18px;min-height:70vh}.journey-step img{max-height:32vh}.uplift-panel{inset:calc(var(--safe-top) + 7px) 7px calc(var(--safe-bottom) + 7px);padding:14px;border-radius:23px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+@media(prefers-reduced-transparency:reduce){:root{--glass-bg:rgba(10,14,21,.96);--glass-blur:0px}.card{background:#111824}}
+
 </style>
 </head>
 <body>
@@ -1020,10 +1112,49 @@ window.addEventListener('orientationchange',()=>setTimeout(()=>graphApi?.fit(),2
 
 // Intro: skip state is remembered separately from simply having seen it.
 const intro=document.getElementById('intro'),introSkip=document.getElementById('introSkip');function hideIntro(skipped=false){intro.classList.add('hidden');STATE.introSeen=true;if(skipped)STATE.introSkipped=true;saveState()}
-introSkip.onclick=()=>hideIntro(true);if(STATE.introSkipped||STATE.introSeen||matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(()=>hideIntro(false),60);else setTimeout(()=>hideIntro(false),5200);
+introSkip.onclick=()=>hideIntro(true);if(STATE.introSkipped||STATE.introSeen||matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(()=>hideIntro(false),60);else setTimeout(()=>hideIntro(false),11000);
 perfHud.classList.toggle('show',STATE.perfHud);
 
 renderRoute();
+
+/* === 25-WAY WOW UPLIFT RUNTIME === */
+const UPLIFT_VERSION='25.1';
+const UPLIFT_BOOK_COLORS=['#b96cff','#63c7ff','#5e82ff','#ffab45','#d2c35e','#9ea8bd'];
+function upliftQuality(){const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;const reduceTransparency=matchMedia('(prefers-reduced-transparency: reduce)').matches;const lowMemory=Number(navigator.deviceMemory||8)<=4;const lowCPU=Number(navigator.hardwareConcurrency||8)<=4;return(reduceMotion||reduceTransparency)?'reduced':(lowMemory||lowCPU||innerWidth<390)?'balanced':'full'}
+document.body.dataset.quality=upliftQuality();
+document.addEventListener('visibilitychange',()=>document.body.classList.toggle('fx-paused',document.hidden));
+function transitionKind(target=''){if(/book\/6|dead|ninurta/i.test(target))return'dead';if(/timeline|book\/4|book\/5|archive/i.test(target))return'history';if(/atlas|knowledge|groups|story|constellation/i.test(target))return'nether';return'earth'}
+function cinematicRoute(target){document.body.dataset.transition=transitionKind(target);archiveSpeak(target);const run=()=>{if(target==='more'){renderMore();return}routeTo(target)};if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(run);else run()}
+document.addEventListener('click',e=>{const route=e.target.closest('[data-route]');if(!route)return;if(route.closest('.uplift-dock'))return;e.preventDefault();e.stopImmediatePropagation();cinematicRoute(route.dataset.route)},true);
+function setBookWorld(){const r=parseRoute();let n=r.name==='book'?+r.a:STATE.scopeBook||1;if(!n||n<1||n>6)n=1;document.body.className=document.body.className.replace(/\bbook-world-\d\b/g,'').trim();document.body.classList.add('book-world-'+n);document.body.classList.toggle('dead-world',n===6)}
+function archiveSpeak(target='archive'){let el=document.getElementById('archiveStatus');if(!el){el=document.createElement('div');el.id='archiveStatus';el.className='archive-status';document.body.appendChild(el)}const sequence=['source found','cross-referencing','confidence matrix updated','record open'];let i=0;clearInterval(el._timer);el.textContent='archive · '+sequence[0];el.classList.add('show');el._timer=setInterval(()=>{i++;if(i>=sequence.length){clearInterval(el._timer);setTimeout(()=>el.classList.remove('show'),450);return}el.textContent='archive · '+sequence[i]},260)}
+function animateTitle(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const el=app.querySelector('.page-head h2,.hero-title,.home-hero h2,.story-inner h2');if(!el||el.dataset.typed)return;const text=el.textContent.trim();if(!text||text.length>90)return;el.dataset.typed='1';el.classList.add('type-reveal');el.setAttribute('aria-label',text);el.innerHTML=text.split(/\s+/).map((w,i)=>'<span class="type-unit" style="--i:'+i+'" aria-hidden="true">'+esc(w)+'&nbsp;</span>').join('')}
+function enhanceImages(){app.querySelectorAll('img').forEach((img,i)=>{img.decoding='async';if(i>1)img.loading='lazy';img.fetchPriority=i===0?'high':'auto'})}
+document.addEventListener('pointerdown',e=>{const x=e.target.closest('button,.chip,[role="button"],.char-card,.time-card,.knowledge-card');if(x)x.classList.add('press-feedback')},{passive:true});
+const upliftPressOff=e=>e.target.closest?.('button,.chip,[role="button"],.char-card,.time-card,.knowledge-card')?.classList.remove('press-feedback');
+document.addEventListener('pointerup',upliftPressOff,{passive:true});document.addEventListener('pointercancel',upliftPressOff,{passive:true});
+function enhanceIntro(){const intro=document.getElementById('intro'),stage=intro?.querySelector('.intro-stage');if(!stage||stage.querySelector('.portal-core'))return;stage.insertAdjacentHTML('afterbegin','<div class="portal-core"></div><div class="intro-shards">'+UPLIFT_BOOK_COLORS.map((c,i)=>'<i class="intro-shard" style="--sc:'+c+';--a:'+(i*60-20)+'deg;--d:'+(i*.28)+'s"></i>').join('')+'</div>');const p=intro.querySelector('.intro-title p');if(p)p.textContent='six books · one collision · living intelligence archive'}
+enhanceIntro();
+function buildDock(){if(document.querySelector('.uplift-dock'))return;document.body.insertAdjacentHTML('beforeend','<nav class="uplift-dock" aria-label="Atlas quick controls"><button data-uplift-nav="overview" title="Home"><b>◉</b><span>Home</span></button><button data-uplift-nav="atlas" title="Atlas"><b>✦</b><span>Atlas</span></button><button data-uplift-action="journey" title="Journey"><b>↯</b><span>Journey</span></button><button data-uplift-action="changes" title="What changed"><b>Δ</b><span>Changes</span></button><button data-uplift-action="worlds" title="World barrier"><b>◐</b><span>Worlds</span></button><button data-uplift-action="assets" title="Asset vault"><b>▧</b><span>Assets</span></button><button data-uplift-action="duke" title="Duke mode"><b>ᴰ</b><span>Duke</span></button></nav><section class="uplift-panel" id="upliftPanel" aria-modal="true" role="dialog"></section><div class="uplift-lightbox" id="upliftLightbox"><div class="uplift-lightbox-inner"><button class="icon-btn" data-uplift-close-lightbox aria-label="Close">×</button><img alt=""></div></div>')}
+buildDock();
+function closeUpliftPanel(){const p=document.getElementById('upliftPanel');p.classList.remove('open');p.innerHTML=''}
+function openUpliftPanel(html){const p=document.getElementById('upliftPanel');p.innerHTML='<button class="icon-btn uplift-panel-close" data-uplift-close aria-label="Close">×</button>'+html;p.classList.add('open');p.scrollTop=0}
+function renderJourneyPanel(){const major=EVENTS.filter(e=>[1,2,3,4,5,6].includes(+e.book)).slice(0,12);openUpliftPanel('<div class="eyebrow">Scroll-driven reconstruction</div><h2>The Journey</h2><p class="prose">The archive reconstructs the crisis as evidence accumulates, relationships tighten, and the barrier between worlds stops behaving like a barrier.</p><div class="journey-scroll">'+major.map(e=>{const file=(typeof CONVERG_EVENT_ART!=='undefined'&&CONVERG_EVENT_ART[e.id])?convergAsset(CONVERG_EVENT_ART[e.id]):gdriveAsset(GDRIVE_VIEW_ART.timeline);return '<article class="journey-step" style="--jc:'+bookColor(e.book)+'"><div><div class="kicker">Book '+e.book+' · '+esc(e.when||e.where||'record')+'</div><h3>'+esc(e.title)+'</h3><p class="prose">'+esc(e.summary||'')+'</p><div class="meta"><span class="pill">'+esc(e.where||'location unresolved')+'</span><span class="pill">'+(e.participants?.length||0)+' participants</span></div></div><img loading="lazy" decoding="async" src="'+file+'" alt="'+esc(e.title)+'"></article>'}).join('')+'</div>')}
+function renderWorldsPanel(){openUpliftPanel('<div class="eyebrow">Cosmology model</div><h2>The World Barrier</h2><p class="prose">Earth and the Nether are modeled as distinct domains with a barrier that should remain intact. Portals appear here as wounds in that boundary rather than ordinary doors.</p><div class="world-viz"><div class="earth-label">Earth</div><div class="nether-label">Nether</div><div class="barrier-label">BARRIER BETWEEN WORLDS</div>'+[18,31,52,72,85].map((x,i)=>'<i class="portal-tear" style="--x:'+x+'%;--d:'+(i*.23)+'s"></i>').join('')+'</div>')}
+function bookNumber(v){const m=String(v||'').match(/\d+/);return m?+m[0]:0}
+function renderChangesPanel(){const a=1,b=STATE.scopeBook||6;const addedChars=CHARACTERS.filter(c=>{const n=bookNumber(c.first);return n>a&&n<=b});const events=EVENTS.filter(e=>+e.book>a&&+e.book<=b);const rels=RELATIONSHIPS.filter(r=>{const n=bookNumber(r.first);return n>a&&n<=b});const knowledge=KNOWLEDGE.filter(k=>{const nums=(k.book.match(/\d+/g)||[]).map(Number);return nums.some(n=>n>a&&n<=b)});openUpliftPanel('<div class="eyebrow">Revelation delta</div><h2>What Changed?</h2><p class="prose">Book 1 → Book '+b+'. This view treats the series as a changing knowledge system, not six static summaries.</p><div class="uplift-grid"><section class="uplift-stat change-column"><h3>People +'+addedChars.length+'</h3><div class="change-list">'+addedChars.slice(0,12).map(c=>'<div class="change-item"><b>'+esc(c.name)+'</b><div class="tiny">'+esc(c.role)+'</div></div>').join('')+'</div></section><section class="uplift-stat change-column"><h3>Events +'+events.length+'</h3><div class="change-list">'+events.slice(0,12).map(e=>'<div class="change-item"><b>'+esc(e.title)+'</b><div class="tiny">Book '+e.book+'</div></div>').join('')+'</div></section><section class="uplift-stat change-column"><h3>Relationships +'+rels.length+'</h3><div class="change-list">'+rels.slice(0,12).map(r=>'<div class="change-item"><b>'+esc(entityName(r.source))+' ↔ '+esc(entityName(r.target))+'</b><div class="tiny">'+esc(r.type)+' · '+esc(r.subtype)+'</div></div>').join('')+'</div></section><section class="uplift-stat change-column"><h3>Knowledge +'+knowledge.length+'</h3><div class="change-list">'+knowledge.slice(0,12).map(k=>'<div class="change-item"><b>'+esc(k.subject)+'</b><div class="tiny">'+esc(k.title)+'</div></div>').join('')+'</div></section></div>')}
+function renderAssetsPanel(){const pairs=[];if(typeof GDRIVE_VIEW_ART!=='undefined')Object.entries(GDRIVE_VIEW_ART).forEach(([k,v])=>pairs.push([k,gdriveAsset(v)]));if(typeof GDRIVE_CHARACTER_ART!=='undefined')Object.entries(GDRIVE_CHARACTER_ART).forEach(([k,v])=>pairs.push([k,gdriveAsset(v)]));if(typeof CONVERG_EVENT_ART!=='undefined')Object.entries(CONVERG_EVENT_ART).slice(0,18).forEach(([k,v])=>pairs.push([k,convergAsset(v)]));if(typeof CONVERG_OBJECT_ART!=='undefined')Object.entries(CONVERG_OBJECT_ART).forEach(([k,v])=>pairs.push([k,convergAsset(v)]));openUpliftPanel('<div class="eyebrow">Curated Drive-derived corpus</div><h2>Asset Vault</h2><p class="prose">The live atlas promotes the existing optimized Google Drive / converge-derived art corpus across characters, events, objects, archive chambers and major transitions. Assets remain local to the site at runtime for iPhone performance.</p><div class="asset-vault">'+pairs.map(([k,src])=>'<figure><img loading="lazy" decoding="async" src="'+src+'" alt=""><figcaption>'+esc(k)+'</figcaption></figure>').join('')+'</div>')}
+function toggleDukeMode(){document.body.classList.toggle('duke-mode');const on=document.body.classList.contains('duke-mode');document.querySelector('[data-uplift-action="duke"]')?.classList.toggle('active',on);archiveSpeak(on?'duke senses online':'standard archive');if(on&&parseRoute().name==='characters'){const d=app.querySelector('[data-char="duke"]');d?.scrollIntoView({behavior:'smooth',block:'center'})}}
+function pulseRelationships(){[...app.querySelectorAll('[data-rel],.rel-row,.matrix-cell')].forEach((el,i)=>{el.classList.remove('relationship-pulse');void el.offsetWidth;el.style.setProperty('--delay',(i%18)*32+'ms');el.classList.add('relationship-pulse')})}
+function propagateKnowledge(card){const root=card||app.querySelector('.knowledge-card');if(!root)return;root.classList.remove('knowledge-propagating');void root.offsetWidth;root.querySelectorAll('.status-tag').forEach((x,i)=>x.style.setProperty('--delay',i*90+'ms'));root.classList.add('knowledge-propagating');const id=root.dataset.knowledge;if(id&&graphApi){setTimeout(()=>graphApi.revealKnowledge(id),220)}}
+document.addEventListener('click',e=>{const n=e.target.closest('[data-uplift-nav]');if(n){cinematicRoute(n.dataset.upliftNav);return}const a=e.target.closest('[data-uplift-action]');if(a){const k=a.dataset.upliftAction;if(k==='journey')renderJourneyPanel();if(k==='changes')renderChangesPanel();if(k==='worlds')renderWorldsPanel();if(k==='assets')renderAssetsPanel();if(k==='duke')toggleDukeMode();return}if(e.target.closest('[data-uplift-close]')){closeUpliftPanel();return}if(e.target.closest('[data-uplift-close-lightbox]')){document.getElementById('upliftLightbox').classList.remove('open');return}const art=e.target.closest('.generated-art-banner img,.generated-gallery-card img,.record-art img,.time-record-art img,.generated-dossier-portrait');if(art){const lb=document.getElementById('upliftLightbox');lb.querySelector('img').src=art.currentSrc||art.src;lb.querySelector('img').alt=art.alt||'Convergence art';lb.classList.add('open');return}});
+document.getElementById('upliftLightbox')?.addEventListener('click',e=>{if(e.target.id==='upliftLightbox')e.currentTarget.classList.remove('open')});
+function injectContextControls(){if(parseRoute().name==='relationships'&&!app.querySelector('[data-uplift-pulse]')){const head=app.querySelector('.page-head');head?.insertAdjacentHTML('beforeend','<button class="ghost-btn" data-uplift-pulse>Pulse network</button>');app.querySelector('[data-uplift-pulse]')?.addEventListener('click',pulseRelationships)}if(parseRoute().name==='knowledge'){app.querySelectorAll('.knowledge-card').forEach(card=>{if(card.querySelector('.uplift-propagate'))return;const b=document.createElement('button');b.className='ghost-btn uplift-propagate';b.textContent='Propagate';b.style.marginTop='10px';b.addEventListener('click',e=>{e.stopPropagation();propagateKnowledge(card)});card.appendChild(b)})}}
+function onRenderedUplift(){setBookWorld();animateTitle();enhanceImages();injectContextControls();document.querySelectorAll('.card,.time-card,.char-card,.knowledge-card').forEach(x=>x.style.willChange='auto');if(parseRoute().name==='atlas')archiveSpeak('atlas synchronized')}
+window.addEventListener('hashchange',()=>setTimeout(onRenderedUplift,0));
+new MutationObserver(()=>{clearTimeout(window.__upliftMut);window.__upliftMut=setTimeout(onRenderedUplift,35)}).observe(app,{childList:true,subtree:false});
+setTimeout(onRenderedUplift,80);
+
 </script>
 </body>
 </html>
