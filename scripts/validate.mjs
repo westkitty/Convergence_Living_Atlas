@@ -64,6 +64,17 @@ assert(html.includes('function inspectArchive(kind,id)'), 'archive entities have
 assert(html.includes("case'archive':renderArchive();if(r.a&&r.b)"), 'archive deep links resolve to inspectors');
 assert(html.includes("#archive/location/"), 'search routes locations to individual entries');
 
+// iPhone/mobile runtime marker
+assert(html.includes("apple-mobile-web-app-capable"), 'iOS web-app capability meta is present');
+assert(html.includes("--safe-left:env(safe-area-inset-left"), 'left safe-area handling exists');
+assert(html.includes("--safe-right:env(safe-area-inset-right"), 'right safe-area handling exists');
+assert(html.includes("function syncMobileViewport()"), 'dynamic mobile viewport handler exists');
+assert(html.includes("phone-landscape"), 'phone landscape mode exists');
+assert(html.includes("atlas-panel-toggle"), 'mobile Atlas controls toggle exists');
+assert(html.includes("coarsePointer?30"), 'mobile graph frame-rate cap exists');
+assert(html.includes("coarsePointer?18:12"), 'coarse-pointer edge hit target expansion exists');
+assert(html.includes("font-size:16px!important"), 'mobile form controls avoid iOS focus zoom');
+
 const externalScripts = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map(m => m[1]);
 assert(externalScripts.length === 0, 'no external runtime script dependencies');
 
