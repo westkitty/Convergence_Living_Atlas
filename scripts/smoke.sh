@@ -66,7 +66,10 @@ grep -q 'event-e13.webp' <<<"$EVENTS"
 
 echo "SMOKE: groups"
 GROUPS="$(dump groups)"
+echo "SMOKE GROUP ASSETS: $(grep -oE 'group-[a-z-]+\\.webp' <<<"$GROUPS" | sort -u | tr '\\n' ' ')" 
+echo "SMOKE: groups team asset"
 grep -q 'group-team.webp' <<<"$GROUPS"
+echo "SMOKE: groups angels asset"
 grep -q 'group-angels.webp' <<<"$GROUPS"
 
 echo "SMOKE: archive"
