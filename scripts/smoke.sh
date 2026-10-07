@@ -16,9 +16,13 @@ done
 curl -fsS "http://127.0.0.1:$PORT/assets/covers.webp" >/tmp/convergence-covers.webp
 curl -fsS "http://127.0.0.1:$PORT/assets/generated/hero.webp" >/tmp/convergence-hero.webp
 curl -fsS "http://127.0.0.1:$PORT/assets/generated/atlas-bg.webp" >/tmp/convergence-atlas-bg.webp
+curl -fsS "http://127.0.0.1:$PORT/assets/generated/converg/event-e1.webp" >/tmp/convergence-event-e1.webp
+curl -fsS "http://127.0.0.1:$PORT/assets/generated/converg/loc-earth.webp" >/tmp/convergence-loc-earth.webp
 test -s /tmp/convergence-covers.webp
 test -s /tmp/convergence-hero.webp
 test -s /tmp/convergence-atlas-bg.webp
+test -s /tmp/convergence-event-e1.webp
+test -s /tmp/convergence-loc-earth.webp
 
 BROWSER=""
 for candidate in google-chrome google-chrome-stable chromium chromium-browser; do
@@ -50,6 +54,20 @@ grep -q 'People introduced' <<<"$BOOK"
 
 TIMELINE="$(dump timeline)"
 grep -q 'Time changes the network' <<<"$TIMELINE"
+grep -q 'event-e1.webp' <<<"$TIMELINE"
+
+EVENTS="$(dump events)"
+grep -q 'event-e1.webp' <<<"$EVENTS"
+grep -q 'event-e13.webp' <<<"$EVENTS"
+
+GROUPS="$(dump groups)"
+grep -q 'group-team.webp' <<<"$GROUPS"
+grep -q 'group-angels.webp' <<<"$GROUPS"
+
+ARCHIVE="$(dump archive)"
+grep -q 'loc-earth.webp' <<<"$ARCHIVE"
+grep -q 'obj-amulet.webp' <<<"$ARCHIVE"
+grep -q 'theme-loyalty.webp' <<<"$ARCHIVE"
 
 ATLAS="$(dump atlas)"
 grep -q 'Relationship atlas' <<<"$ATLAS"

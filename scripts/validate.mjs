@@ -51,6 +51,19 @@ assert(html.includes("gdriveAsset('atlas-bg.webp')"), 'Atlas must render the ver
 assert(html.includes("gdriveAsset('hero.webp')"), 'Overview must render the verified generated hero');
 assert(html.includes('generated-gallery'), 'Overview visual archive must exist');
 
+const convergAssets = ["event-e1.webp","event-e2.webp","event-e3.webp","event-e4.webp","event-e5.webp","event-e6.webp","event-e7.webp","event-e8.webp","event-e9.webp","event-e10.webp","event-e11.webp","event-e12.webp","event-e13.webp","group-team.webp","group-certus.webp","group-order.webp","group-sent.webp","group-asgard.webp","group-nether.webp","group-angels.webp","loc-earth.webp","loc-ohio.webp","loc-europe.webp","loc-medoc.webp","loc-carnac.webp","loc-doggerland.webp","loc-asgard.webp","loc-dead-paris.webp","loc-1928.webp","obj-amulet.webp","obj-map.webp","obj-keys.webp","obj-gnome.webp","obj-gryphon.webp","obj-dragon.webp","obj-loki-book.webp","obj-astrolabe.webp","theme-loyalty.webp","theme-knowledge.webp","theme-method.webp","theme-uncertainty.webp","theme-freewill.webp","theme-pack.webp"];
+for (const file of convergAssets) {
+  const path = 'assets/generated/converg/' + file;
+  assert(fs.existsSync(path), 'missing /converg generated asset: ' + path);
+  assert(fs.statSync(path).size > 30_000, '/converg generated asset unexpectedly small: ' + path);
+}
+assert(html.includes("const CONVERG_ASSET_ROOT='assets/generated/converg/';"), '/converg asset root is wired into production HTML');
+assert(html.includes('const CONVERG_EVENT_ART='), 'per-event art mapping exists');
+assert(html.includes('const CONVERG_GROUP_ART='), 'per-group art mapping exists');
+assert(html.includes('function inspectArchive(kind,id)'), 'archive entities have first-class inspectors');
+assert(html.includes("case'archive':renderArchive();if(r.a&&r.b)"), 'archive deep links resolve to inspectors');
+assert(html.includes("#archive/location/"), 'search routes locations to individual entries');
+
 const externalScripts = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map(m => m[1]);
 assert(externalScripts.length === 0, 'no external runtime script dependencies');
 
@@ -65,6 +78,7 @@ console.log(JSON.stringify({
   coverRefs,
   generatedAssets: generatedAssets.length,
   integratedAssets: integratedAssets.length,
+  convergAssets: convergAssets.length,
   externalScripts: externalScripts.length,
   externalUrls: externalUrls.length
 }, null, 2));

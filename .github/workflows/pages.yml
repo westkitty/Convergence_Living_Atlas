@@ -101,16 +101,22 @@ jobs:
           LIVE_COVER="/tmp/convergence-live-covers.webp"
           LIVE_HERO="/tmp/convergence-live-hero.webp"
           LIVE_ATLAS="/tmp/convergence-live-atlas-bg.webp"
+          LIVE_CONVERG_EVENT="/tmp/convergence-live-event-e1.webp"
+          LIVE_CONVERG_LOCATION="/tmp/convergence-live-loc-earth.webp"
 
           matched=0
           for attempt in $(seq 1 60); do
             if curl -fsS --max-time 10 "$BASE/" -o "$LIVE_INDEX"               && curl -fsS --max-time 10 "$BASE/assets/covers.webp" -o "$LIVE_COVER" \
               && curl -fsS --max-time 10 "$BASE/assets/generated/hero.webp" -o "$LIVE_HERO" \
               && curl -fsS --max-time 10 "$BASE/assets/generated/atlas-bg.webp" -o "$LIVE_ATLAS" \
+              && curl -fsS --max-time 10 "$BASE/assets/generated/converg/event-e1.webp" -o "$LIVE_CONVERG_EVENT" \
+              && curl -fsS --max-time 10 "$BASE/assets/generated/converg/loc-earth.webp" -o "$LIVE_CONVERG_LOCATION" \
               && cmp -s index.html "$LIVE_INDEX" \
               && cmp -s assets/covers.webp "$LIVE_COVER" \
               && cmp -s assets/generated/hero.webp "$LIVE_HERO" \
-              && cmp -s assets/generated/atlas-bg.webp "$LIVE_ATLAS"; then
+              && cmp -s assets/generated/atlas-bg.webp "$LIVE_ATLAS" \
+              && cmp -s assets/generated/converg/event-e1.webp "$LIVE_CONVERG_EVENT" \
+              && cmp -s assets/generated/converg/loc-earth.webp "$LIVE_CONVERG_LOCATION"; then
               matched=1
               echo "Live Pages matches production HTML and cover asset on attempt $attempt."
               break
@@ -139,7 +145,10 @@ jobs:
           test -s "$LIVE_COVER"
           test -s "$LIVE_HERO"
           test -s "$LIVE_ATLAS"
+          test -s "$LIVE_CONVERG_EVENT"
+          test -s "$LIVE_CONVERG_LOCATION"
           grep -q 'assets/generated/hero.webp' "$LIVE_INDEX"
           grep -q 'assets/generated/atlas-bg.webp' "$LIVE_INDEX"
+          grep -q 'assets/generated/converg/' "$LIVE_INDEX"
 
-          echo "LIVE PAGES GDRIVE ASSET VERIFY PASS"
+          echo "LIVE PAGES GDRIVE + CONVERG ASSET VERIFY PASS"

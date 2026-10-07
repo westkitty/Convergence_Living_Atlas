@@ -57,3 +57,43 @@ Role-based generated images that are not unambiguously named in the source corpu
 - Static validation requires every curated production asset to exist, exceed a minimum size, and be referenced by production HTML.
 - Browser smoke tests prove the Overview and Atlas render generated-art elements.
 - Pages delivery verifies the live public hero and Atlas background bytes against the repository source.
+
+
+## `/macbook/converge/converg` expansion
+
+A newer nested Google Drive corpus was verified at:
+
+`/Users/andrew/Library/CloudStorage/GoogleDrive-digitalghosts269@gmail.com/My Drive/macbook/converge/converg`
+
+The folder contains **331 image files** totaling approximately **301 MB**. The source files are predominantly **1376×768** cel-shaded / flat-animation illustrations and include multiple variants for the same narrative subject.
+
+### Curated production integration
+
+The application now ships an additional **43-image WebP subset** under `assets/generated/converg/`, approximately **4.8 MiB** after optimization. Selection was semantic rather than exhaustive: one strong, visually reviewed image was chosen for each encoded record class that the new corpus could directly support.
+
+Coverage is now:
+
+- **13 / 13 encoded events** — individual situation art.
+- **7 / 7 constellation groups** — individual group art and inspector art.
+- **9 / 9 locations** — individual archive thumbnails and deep-linked inspector art.
+- **8 / 8 currently encoded artifacts** — individual archive thumbnails and deep-linked inspector art.
+- **6 / 6 recurring themes** — individual archive thumbnails and deep-linked inspector art.
+
+The remaining duplicate variants stay in Drive rather than bloating the public site.
+
+### Canon guard
+
+The new folder contains generated concepts for many additional named figurine/key shapes. Those filenames are **not treated as canon facts**. The Atlas only promotes the artifact identities already encoded from the novels. In particular, generated labels beyond the established gnome, gryphon, dragon, aggregate mooring-key set, amulet, notebook, map, and astrolabe remain unused as factual entries unless source evidence establishes them.
+
+### Delivery contract
+
+The new record assets are not decorative repository cargo:
+
+- event cards, timeline cards, Book Lens event cards, and event inspectors load event-specific images;
+- group cards and group inspectors load group-specific images;
+- archive location/artifact/theme rows now have thumbnails and keyboard-accessible deep links;
+- location, artifact, and theme records now open first-class inspectors with their visual asset;
+- global search routes groups, locations, artifacts, and themes directly to those records;
+- validation requires all 43 production assets;
+- browser smoke verifies events, groups, timeline, and archive integration;
+- Pages verification compares live public bytes for both an event image and a location image.

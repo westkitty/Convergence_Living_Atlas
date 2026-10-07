@@ -93,6 +93,25 @@
 @media(max-width:900px){.generated-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.generated-art-banner{height:190px}}
 @media(max-width:720px){.generated-art-banner{height:150px;margin-bottom:18px;border-radius:16px}.generated-gallery-grid{grid-template-columns:1fr 1fr}.generated-gallery-card{min-height:135px}.generated-hero-art{opacity:.38}.gdrive-atlas-art{opacity:.25}.generated-atlas-scene{height:94px}}
 
+
+/* /macbook/converge/converg curated record art */
+.record-art{position:relative;aspect-ratio:16/9;margin:-3px -3px 15px;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;background:#070a0f}
+.record-art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s var(--ease),filter .35s var(--ease)}
+.card:hover>.record-art img{transform:scale(1.018);filter:saturate(1.05)}
+.record-art:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 54%,rgba(5,8,12,.44));pointer-events:none}
+.record-art-label{position:absolute;left:9px;bottom:8px;z-index:2;padding:4px 7px;border-radius:999px;background:rgba(5,8,12,.74);border:1px solid rgba(255,255,255,.1);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:#d0dae8}
+.sheet-record-art{aspect-ratio:16/9;margin-bottom:16px;border-radius:15px;overflow:hidden;border:1px solid var(--line);background:#070a0f}
+.sheet-record-art img{width:100%;height:100%;display:block;object-fit:cover}
+.archive-entry{display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;align-items:center;border-radius:12px;padding:10px!important;margin:3px -8px;cursor:pointer;transition:background .18s,border-color .18s}
+.archive-entry:hover,.archive-entry:focus-visible{background:rgba(255,255,255,.045);outline:1px solid rgba(255,255,255,.11);outline-offset:0}
+.archive-thumb{width:86px;aspect-ratio:16/10;border-radius:9px;overflow:hidden;background:#070a0f;border:1px solid rgba(255,255,255,.07)}
+.archive-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.archive-copy{min-width:0}.archive-copy b{display:block;font-size:13px}.archive-copy p{margin:5px 0 0;color:var(--muted);font-size:11px;line-height:1.5}
+.time-record-art{float:right;width:144px;margin:-4px -4px 8px 14px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#070a0f}
+.time-record-art img{width:100%;height:100%;object-fit:cover;display:block}
+.asset-provenance{margin-top:10px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#8294ab}
+@media(max-width:720px){.archive-entry{grid-template-columns:74px minmax(0,1fr)}.archive-thumb{width:74px}.time-record-art{width:104px}.record-art{border-radius:11px}}
+
 </style>
 </head>
 <body>
@@ -485,7 +504,7 @@ function inspectKnowledge(id){const k=KNOWLEDGE.find(x=>x.id===id&&withinScope(x
 
 function inspectEvent(id){const e=EVENTS.find(x=>x.id===id&&x.book<=STATE.scopeBook);if(!e)return;rememberHistory(e.title,'#events/'+e.id);openSheet('Event impact',`<div class="inspect-asset asset-slice" style="--cover-pos:${coverPos(e.book)}"></div><div class="kicker">${bookLabel(e.book)} · ${esc(e.where)}</div><h2 style="font:500 30px/1.05 Georgia,serif">${esc(e.title)}</h2><p class="prose">${esc(e.summary)}</p><div class="impact"><div class="impact-box"><div class="section-title">Before</div><div class="tiny">${esc(e.before)}</div></div><div class="impact-arrow">→</div><div class="impact-box"><div class="section-title">After</div><div class="tiny">${esc(e.after)}</div></div></div><div class="section-title" style="margin-top:16px">Participants</div><div class="meta">${e.participants.map(entityPill).join('')}</div><div class="section-title" style="margin-top:16px">Source context</div><p class="tiny">${esc(e.evidence)}</p><div class="divider"></div><div style="display:flex;gap:8px;flex-wrap:wrap">${bookmarkButton('event',e.id,e.title,'#events/'+e.id)}<button class="solid-btn" data-event-atlas="${e.id}">Show network at this event</button></div>`)}
 
-function searchItems(q){q=q.trim().toLowerCase();const items=[];BOOKS.filter(b=>b.n<=STATE.scopeBook).forEach(b=>items.push({type:'Book',title:b.title,sub:`Book ${b.n} · ${BOOK_ASSETS[b.n].mood}`,color:b.color,hash:'#book/'+b.n}));CHARACTERS.filter(c=>withinScope(c.first)).forEach(c=>items.push({type:'Character',title:c.name,sub:[...c.aliases,c.role].join(' · '),color:c.color,hash:'#character/'+c.id}));GROUPS.forEach(g=>items.push({type:'Group',title:g.name,sub:g.desc,color:g.color,hash:'#groups',action:()=>inspectGroup(g.id)}));EVENTS.filter(e=>e.book<=STATE.scopeBook).forEach(e=>items.push({type:'Event',title:e.title,sub:e.summary+' '+e.where,color:bookColor(e.book),hash:'#events/'+e.id}));KNOWLEDGE.filter(k=>withinScope(k.book)).forEach(k=>items.push({type:'Knowledge',title:k.subject+': '+k.title,sub:k.book+' '+k.why,color:'#8eb5ff',hash:'#knowledge/'+k.id}));RELATIONSHIPS.filter(r=>withinScope(r.first)).forEach(r=>items.push({type:'Relationship',title:`${entityName(r.source)} ↔ ${entityName(r.target)}`,sub:`${r.type} · ${r.subtype} · ${r.explanation}`,color:edgeSearchColor(r.type),hash:`#relationship/${r.source}/${r.target}`}));LOCATIONS.filter(x=>withinScope(x.book)).forEach(x=>items.push({type:'Location',title:x.name,sub:x.desc,color:'#9ac4ff',hash:'#archive'}));OBJECTS.filter(x=>withinScope(x.book)).forEach(x=>items.push({type:'Object',title:x.name,sub:x.desc,color:'#d5b3ff',hash:'#archive'}));THEMES.forEach(x=>items.push({type:'Theme',title:x.name,sub:x.desc,color:'#78e8c5',hash:'#archive'}));EVIDENCE.filter(x=>withinScope(x.source)).forEach(x=>items.push({type:'Evidence',title:x.source,sub:x.context,color:'#aab6c8',hash:'#about'}));return items.filter(x=>!q||(x.title+' '+x.sub+' '+x.type).toLowerCase().includes(q)).slice(0,30)}
+function searchItems(q){q=q.trim().toLowerCase();const items=[];BOOKS.filter(b=>b.n<=STATE.scopeBook).forEach(b=>items.push({type:'Book',title:b.title,sub:`Book ${b.n} · ${BOOK_ASSETS[b.n].mood}`,color:b.color,hash:'#book/'+b.n}));CHARACTERS.filter(c=>withinScope(c.first)).forEach(c=>items.push({type:'Character',title:c.name,sub:[...c.aliases,c.role].join(' · '),color:c.color,hash:'#character/'+c.id}));GROUPS.forEach(g=>items.push({type:'Group',title:g.name,sub:g.desc,color:g.color,hash:'#groups/'+g.id}));EVENTS.filter(e=>e.book<=STATE.scopeBook).forEach(e=>items.push({type:'Event',title:e.title,sub:e.summary+' '+e.where,color:bookColor(e.book),hash:'#events/'+e.id}));KNOWLEDGE.filter(k=>withinScope(k.book)).forEach(k=>items.push({type:'Knowledge',title:k.subject+': '+k.title,sub:k.book+' '+k.why,color:'#8eb5ff',hash:'#knowledge/'+k.id}));RELATIONSHIPS.filter(r=>withinScope(r.first)).forEach(r=>items.push({type:'Relationship',title:`${entityName(r.source)} ↔ ${entityName(r.target)}`,sub:`${r.type} · ${r.subtype} · ${r.explanation}`,color:edgeSearchColor(r.type),hash:`#relationship/${r.source}/${r.target}`}));LOCATIONS.filter(x=>withinScope(x.book)).forEach(x=>items.push({type:'Location',title:x.name,sub:x.desc,color:'#9ac4ff',hash:'#archive'}));OBJECTS.filter(x=>withinScope(x.book)).forEach(x=>items.push({type:'Object',title:x.name,sub:x.desc,color:'#d5b3ff',hash:'#archive'}));THEMES.forEach(x=>items.push({type:'Theme',title:x.name,sub:x.desc,color:'#78e8c5',hash:'#archive'}));EVIDENCE.filter(x=>withinScope(x.source)).forEach(x=>items.push({type:'Evidence',title:x.source,sub:x.context,color:'#aab6c8',hash:'#about'}));return items.filter(x=>!q||(x.title+' '+x.sub+' '+x.type).toLowerCase().includes(q)).slice(0,30)}
 function renderMore(){openSheet('Navigate',`<div style="display:grid;gap:8px">${[['knowledge','Knowledge'],['relationships','Relationships'],['events','Events'],['groups','Groups'],['archive','Field archive'],['contradictions','Contradictions'],['compare','Compare'],['story','Story mode'],['constellation','Whole constellation'],['about','Source & methodology']].map(x=>`<button class="ghost-btn" data-route="${x[0]}" style="justify-content:flex-start">${x[1]}</button>`).join('')}</div>`,'half')}
 
 
@@ -578,12 +597,115 @@ renderArchive=function(){_assetRenderArchive.apply(this,arguments);injectGenerat
 const _assetRenderAbout=renderAbout;
 renderAbout=function(){_assetRenderAbout.apply(this,arguments);injectGeneratedBanner(GDRIVE_VIEW_ART.about,'Cosmic source field')};
 
-function renderRoute(){cleanup();closeSheet();const r=parseRoute();updateNav(r.name==='book'?'overview':r.name==='character'?'characters':r.name==='relationship'?'relationships':r.name);switch(r.name){case'overview':renderOverview();break;case'book':renderBook(r.a);break;case'atlas':renderAtlas();break;case'characters':renderCharacters();break;case'character':renderDossier(r.a);break;case'relationships':renderRelationships();break;case'relationship':renderRelationships();{const rr=RELATIONSHIPS.find(x=>(x.source===r.a&&x.target===r.b)||(x.direction==='reciprocal'&&x.source===r.b&&x.target===r.a));if(rr)setTimeout(()=>inspectRelationship(rr.id),80)}break;case'knowledge':renderKnowledge();if(r.a)setTimeout(()=>inspectKnowledge(r.a),80);break;case'timeline':renderTimeline();break;case'events':renderEvents();if(r.a)setTimeout(()=>inspectEvent(r.a),80);break;case'groups':renderGroups();break;case'archive':renderArchive();break;case'contradictions':renderContradictions();break;case'compare':renderCompare(r.a,r.b);break;case'story':renderStory();break;case'constellation':renderConstellation();break;case'about':renderAbout();break;case'more':renderOverview();setTimeout(renderMore,0);break;default:routeTo('overview')}}
+
+/* /macbook/converge/converg curated record art */
+const CONVERG_ASSET_ROOT='assets/generated/converg/';
+const CONVERG_EVENT_ART=Object.fromEntries(EVENTS.map(e=>[e.id,'event-'+e.id+'.webp']));
+const CONVERG_GROUP_ART=Object.fromEntries(GROUPS.map(g=>[g.id,'group-'+g.id+'.webp']));
+const CONVERG_LOCATION_ART={
+  earth:'loc-earth.webp',
+  ohio:'loc-ohio.webp',
+  europe:'loc-europe.webp',
+  medoc:'loc-medoc.webp',
+  carnac:'loc-carnac.webp',
+  doggerland:'loc-doggerland.webp',
+  'asgard-place':'loc-asgard.webp',
+  'dead-paris':'loc-dead-paris.webp',
+  year1928:'loc-1928.webp'
+};
+const CONVERG_OBJECT_ART={
+  amulet:'obj-amulet.webp',
+  map:'obj-map.webp',
+  keys:'obj-keys.webp',
+  gnome:'obj-gnome.webp',
+  gryphon:'obj-gryphon.webp',
+  'dragon-key':'obj-dragon.webp',
+  'loki-book':'obj-loki-book.webp',
+  astrolabe:'obj-astrolabe.webp'
+};
+const CONVERG_THEME_ART=Object.fromEntries(THEMES.map(t=>[t.id,'theme-'+t.id+'.webp']));
+function convergAsset(file){return CONVERG_ASSET_ROOT+file}
+function recordArt(file,alt,label='project art'){
+  if(!file)return '';
+  return '<figure class="record-art"><img loading="lazy" decoding="async" src="'+convergAsset(file)+'" alt="'+esc(alt)+'"><figcaption class="record-art-label">'+esc(label)+'</figcaption></figure>';
+}
+function sheetRecordArt(file,alt){
+  if(!file)return '';
+  return '<figure class="sheet-record-art"><img loading="eager" decoding="async" src="'+convergAsset(file)+'" alt="'+esc(alt)+'"></figure>';
+}
+function applyConvergEventArt(){
+  app.querySelectorAll('[data-event]').forEach(card=>{
+    const id=card.dataset.event,file=CONVERG_EVENT_ART[id],e=EVENTS.find(x=>x.id===id);
+    if(!file||!e)return;
+    if(card.classList.contains('time-card')){
+      if(!card.querySelector('.time-record-art'))card.insertAdjacentHTML('afterbegin','<div class="time-record-art"><img loading="lazy" decoding="async" src="'+convergAsset(file)+'" alt="'+esc(e.title)+'"></div>');
+    }else if(card.classList.contains('card')&&!card.querySelector('.record-art')){
+      card.insertAdjacentHTML('afterbegin',recordArt(file,e.title,'event record'));
+    }
+  });
+}
+function applyConvergGroupArt(){
+  app.querySelectorAll('[data-group]').forEach(card=>{
+    const id=card.dataset.group,file=CONVERG_GROUP_ART[id],g=GROUPS.find(x=>x.id===id);
+    if(file&&g&&card.classList.contains('card')&&!card.querySelector('.record-art'))card.insertAdjacentHTML('afterbegin',recordArt(file,g.name,'constellation group'));
+  });
+}
+function enhanceArchiveRow(row,kind,item,file){
+  if(!row||!item||!file||row.classList.contains('archive-entry'))return;
+  const original=row.innerHTML;
+  row.classList.add('archive-entry');
+  row.dataset.archiveKind=kind;
+  row.dataset.archiveId=item.id;
+  row.setAttribute('role','button');
+  row.setAttribute('tabindex','0');
+  row.setAttribute('aria-label','Open '+item.name+' '+kind+' record');
+  row.innerHTML='<div class="archive-thumb"><img loading="lazy" decoding="async" src="'+convergAsset(file)+'" alt=""></div><div class="archive-copy">'+original+'</div>';
+  row.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();routeTo('archive/'+kind+'/'+item.id)}});
+}
+function applyConvergArchiveArt(){
+  const cols=[...app.querySelectorAll('.archive-column')];
+  if(cols.length<3)return;
+  const locs=LOCATIONS.filter(x=>withinScope(x.book));
+  const objs=OBJECTS.filter(x=>withinScope(x.book));
+  const themes=THEMES;
+  [...cols[0].querySelectorAll('.archive-row')].forEach((row,i)=>{const x=locs[i];if(x)enhanceArchiveRow(row,'location',x,CONVERG_LOCATION_ART[x.id])});
+  [...cols[1].querySelectorAll('.archive-row')].forEach((row,i)=>{const x=objs[i];if(x)enhanceArchiveRow(row,'object',x,CONVERG_OBJECT_ART[x.id])});
+  [...cols[2].querySelectorAll('.archive-row')].forEach((row,i)=>{const x=themes[i];if(x)enhanceArchiveRow(row,'theme',x,CONVERG_THEME_ART[x.id])});
+}
+function inspectArchive(kind,id){
+  const specs={
+    location:{items:LOCATIONS,art:CONVERG_LOCATION_ART,label:'Location',meta:x=>x.kind+' · '+x.book},
+    object:{items:OBJECTS,art:CONVERG_OBJECT_ART,label:'Artifact',meta:x=>x.type+' · '+x.book},
+    theme:{items:THEMES,art:CONVERG_THEME_ART,label:'Theme',meta:()=> 'recurring pattern'}
+  };
+  const spec=specs[kind],item=spec?.items.find(x=>x.id===id);
+  if(!spec||!item)return;
+  if(kind!=='theme'&&!withinScope(item.book)){routeTo('archive');return}
+  const hash='#archive/'+kind+'/'+item.id;
+  rememberHistory(item.name,hash);
+  openSheet(spec.label,sheetRecordArt(spec.art[item.id],item.name)+'<div class="kicker">'+esc(spec.meta(item))+'</div><h2 style="font:500 30px/1.05 Georgia,serif;margin:8px 0">'+esc(item.name)+'</h2><p class="prose">'+esc(item.desc)+'</p><div class="asset-provenance">Illustrative project art · verified /macbook/converge/converg corpus</div><div class="divider"></div><div style="display:flex;gap:8px;flex-wrap:wrap">'+bookmarkButton(kind,item.id,item.name,hash)+'</div>');
+}
+const _convergRenderBook=renderBook;
+renderBook=function(){_convergRenderBook.apply(this,arguments);applyConvergEventArt()};
+const _convergRenderTimeline=renderTimeline;
+renderTimeline=function(){_convergRenderTimeline.apply(this,arguments);applyConvergEventArt()};
+const _convergRenderEvents=renderEvents;
+renderEvents=function(){_convergRenderEvents.apply(this,arguments);applyConvergEventArt()};
+const _convergRenderGroups=renderGroups;
+renderGroups=function(){_convergRenderGroups.apply(this,arguments);applyConvergGroupArt()};
+const _convergRenderArchive=renderArchive;
+renderArchive=function(){_convergRenderArchive.apply(this,arguments);applyConvergArchiveArt()};
+const _convergInspectEvent=inspectEvent;
+inspectEvent=function(id){_convergInspectEvent.apply(this,arguments);const e=EVENTS.find(x=>x.id===id);if(e&&sheet.classList.contains('open')&&CONVERG_EVENT_ART[id]&&!sheetBody.querySelector('.sheet-record-art'))sheetBody.insertAdjacentHTML('afterbegin',sheetRecordArt(CONVERG_EVENT_ART[id],e.title))};
+const _convergInspectGroup=inspectGroup;
+inspectGroup=function(id){_convergInspectGroup.apply(this,arguments);const g=GROUPS.find(x=>x.id===id);if(g&&sheet.classList.contains('open')&&CONVERG_GROUP_ART[id]&&!sheetBody.querySelector('.sheet-record-art'))sheetBody.insertAdjacentHTML('afterbegin',sheetRecordArt(CONVERG_GROUP_ART[id],g.name))};
+
+function renderRoute(){cleanup();closeSheet();const r=parseRoute();updateNav(r.name==='book'?'overview':r.name==='character'?'characters':r.name==='relationship'?'relationships':r.name);switch(r.name){case'overview':renderOverview();break;case'book':renderBook(r.a);break;case'atlas':renderAtlas();break;case'characters':renderCharacters();break;case'character':renderDossier(r.a);break;case'relationships':renderRelationships();break;case'relationship':renderRelationships();{const rr=RELATIONSHIPS.find(x=>(x.source===r.a&&x.target===r.b)||(x.direction==='reciprocal'&&x.source===r.b&&x.target===r.a));if(rr)setTimeout(()=>inspectRelationship(rr.id),80)}break;case'knowledge':renderKnowledge();if(r.a)setTimeout(()=>inspectKnowledge(r.a),80);break;case'timeline':renderTimeline();break;case'events':renderEvents();if(r.a)setTimeout(()=>inspectEvent(r.a),80);break;case'groups':renderGroups();if(r.a)setTimeout(()=>inspectGroup(r.a),80);break;case'archive':renderArchive();if(r.a&&r.b)setTimeout(()=>inspectArchive(r.a,r.b),80);break;case'contradictions':renderContradictions();break;case'compare':renderCompare(r.a,r.b);break;case'story':renderStory();break;case'constellation':renderConstellation();break;case'about':renderAbout();break;case'more':renderOverview();setTimeout(renderMore,0);break;default:routeTo('overview')}}
 
 const COMMANDS=[
  ['Open Overview','overview'],['Browse Books','book/1'],['Go to Atlas','atlas'],['Open Field Archive','archive'],['Find Character','characters'],['Compare Characters','compare'],['Open Timeline','timeline'],['Open Knowledge','knowledge'],['Show Contradictions','contradictions'],['Open Story Mode','story'],['Whole Constellation','constellation'],['Source & Methodology','about']
 ];
-function searchItems(q){q=q.trim().toLowerCase();const items=[];CHARACTERS.forEach(c=>items.push({type:'Character',title:c.name,sub:[...c.aliases,c.role].join(' · '),color:c.color,hash:'#character/'+c.id}));GROUPS.forEach(g=>items.push({type:'Group',title:g.name,sub:g.desc,color:g.color,hash:'#groups',action:()=>inspectGroup(g.id)}));EVENTS.forEach(e=>items.push({type:'Event',title:e.title,sub:e.summary+' '+e.where,color:bookColor(e.book),hash:'#events/'+e.id}));KNOWLEDGE.forEach(k=>items.push({type:'Knowledge',title:k.subject+': '+k.title,sub:k.book+' '+k.why,color:'#8eb5ff',hash:'#knowledge/'+k.id}));RELATIONSHIPS.forEach(r=>items.push({type:'Relationship',title:`${entityName(r.source)} ↔ ${entityName(r.target)}`,sub:`${r.type} · ${r.subtype} · ${r.explanation}`,color:edgeSearchColor(r.type),hash:`#relationship/${r.source}/${r.target}`}));LOCATIONS.forEach(x=>items.push({type:'Location',title:x.name,sub:x.desc,color:'#9ac4ff',hash:'#archive'}));OBJECTS.forEach(x=>items.push({type:'Object',title:x.name,sub:x.desc,color:'#d5b3ff',hash:'#archive'}));THEMES.forEach(x=>items.push({type:'Theme',title:x.name,sub:x.desc,color:'#78e8c5',hash:'#archive'}));EVIDENCE.forEach(x=>items.push({type:'Evidence',title:x.source,sub:x.context,color:'#aab6c8',hash:'#about'}));return items.filter(x=>!q||(x.title+' '+x.sub+' '+x.type).toLowerCase().includes(q)).slice(0,30)}
+function searchItems(q){q=q.trim().toLowerCase();const items=[];CHARACTERS.forEach(c=>items.push({type:'Character',title:c.name,sub:[...c.aliases,c.role].join(' · '),color:c.color,hash:'#character/'+c.id}));GROUPS.forEach(g=>items.push({type:'Group',title:g.name,sub:g.desc,color:g.color,hash:'#groups/'+g.id}));EVENTS.forEach(e=>items.push({type:'Event',title:e.title,sub:e.summary+' '+e.where,color:bookColor(e.book),hash:'#events/'+e.id}));KNOWLEDGE.forEach(k=>items.push({type:'Knowledge',title:k.subject+': '+k.title,sub:k.book+' '+k.why,color:'#8eb5ff',hash:'#knowledge/'+k.id}));RELATIONSHIPS.forEach(r=>items.push({type:'Relationship',title:`${entityName(r.source)} ↔ ${entityName(r.target)}`,sub:`${r.type} · ${r.subtype} · ${r.explanation}`,color:edgeSearchColor(r.type),hash:`#relationship/${r.source}/${r.target}`}));LOCATIONS.forEach(x=>items.push({type:'Location',title:x.name,sub:x.desc,color:'#9ac4ff',hash:'#archive/location/'+x.id}));OBJECTS.forEach(x=>items.push({type:'Object',title:x.name,sub:x.desc,color:'#d5b3ff',hash:'#archive/object/'+x.id}));THEMES.forEach(x=>items.push({type:'Theme',title:x.name,sub:x.desc,color:'#78e8c5',hash:'#archive/theme/'+x.id}));EVIDENCE.forEach(x=>items.push({type:'Evidence',title:x.source,sub:x.context,color:'#aab6c8',hash:'#about'}));return items.filter(x=>!q||(x.title+' '+x.sub+' '+x.type).toLowerCase().includes(q)).slice(0,30)}
 function edgeSearchColor(t){return t==='conflict'?'#ff5c73':t==='love'?'#ff76b8':t==='bond'?'#f4c95d':'#8ea2c0'}
 let paletteIndex=0,paletteItems=[];
 function renderPalette(q=''){const cmd=q.startsWith('>')||!q?COMMANDS.filter(x=>!q||x[0].toLowerCase().includes(q.replace(/^>/,'').trim().toLowerCase())).map(x=>({type:'Command',title:x[0],sub:'#'+x[1],color:'#ff8b70',hash:'#'+x[1]})):[];paletteItems=[...cmd,...searchItems(q.replace(/^>/,'')).slice(0,35)];paletteIndex=Math.min(paletteIndex,Math.max(0,paletteItems.length-1));paletteResults.innerHTML=paletteItems.map((x,i)=>`<button class="palette-item ${i===paletteIndex?'active':''}" data-pindex="${i}"><span class="picon" style="--pc:${x.color}">${esc(x.type[0])}</span><span><b>${esc(x.title)}</b><small style="display:block;color:#7f8ca0;margin-top:3px">${esc(x.sub||'')}</small></span><span class="tiny">${esc(x.type)}</span></button>`).join('')||'<div class="tiny" style="padding:20px">No source-supported result.</div>'}
@@ -592,7 +714,7 @@ function closePalette(){const wasOpen=palette.classList.contains('open');palette
 function choosePalette(i){const x=paletteItems[i];if(!x)return;closePalette();if(x.hash)location.hash=x.hash;setTimeout(()=>x.action?.(),100)}
 
 // Global interaction layer.
-document.addEventListener('click',ev=>{const route=ev.target.closest('[data-route]');if(route){ev.preventDefault();if(route.dataset.route==='more'){renderMore();return}routeTo(route.dataset.route);return}const earlyPin=ev.target.closest('[data-pin]');if(earlyPin){ev.preventDefault();ev.stopPropagation();const id=earlyPin.dataset.pin;STATE.pins=STATE.pins.includes(id)?STATE.pins.filter(x=>x!==id):[...STATE.pins,id];saveState();renderRoute();toast(STATE.pins.includes(id)?'Pinned':'Unpinned');return}const ch=ev.target.closest('[data-char]');if(ch){routeTo('character/'+ch.dataset.char);return}const rel=ev.target.closest('[data-rel]');if(rel){inspectRelationship(rel.dataset.rel);return}const kn=ev.target.closest('[data-knowledge]');if(kn){inspectKnowledge(kn.dataset.knowledge);return}const event=ev.target.closest('[data-event]');if(event){inspectEvent(event.dataset.event);return}const group=ev.target.closest('[data-group]');if(group){inspectGroup(group.dataset.group);return}const con=ev.target.closest('[data-contradiction]');if(con){inspectContradiction(con.dataset.contradiction);return}const bm=ev.target.closest('[data-bookmark-type]');if(bm){ev.stopPropagation();toggleBookmark(bm.dataset.bookmarkType,bm.dataset.bookmarkId,bm.dataset.bookmarkLabel,bm.dataset.bookmarkHash);const t=bm.dataset.bookmarkType,id=bm.dataset.bookmarkId,label=bm.dataset.bookmarkLabel,hash=bm.dataset.bookmarkHash;bm.textContent=isBookmarked(t,id)?'★ Bookmarked':'☆ Bookmark';return}const bo=ev.target.closest('[data-bookmark-open]');if(bo){routeTo(bo.dataset.bookmarkOpen);return}const pin=ev.target.closest('[data-pin]');if(pin){ev.stopPropagation();const id=pin.dataset.pin;STATE.pins=STATE.pins.includes(id)?STATE.pins.filter(x=>x!==id):[...STATE.pins,id];saveState();renderRoute();toast(STATE.pins.includes(id)?'Pinned':'Unpinned');return}const scope=ev.target.closest('[data-scope-book]');if(scope){closeSheet();setScopeBook(scope.dataset.scopeBook);return}const bookOpen=ev.target.closest('[data-book-open]');if(bookOpen){routeTo('book/'+bookOpen.dataset.bookOpen);return}const bookAtlas=ev.target.closest('[data-book-atlas]');if(bookAtlas){const n=+bookAtlas.dataset.bookAtlas;STATE.timelineBook=Math.min(n,STATE.scopeBook);saveState();routeTo('atlas');setTimeout(()=>graphApi?.setTime(STATE.timelineBook),80);return}const ga=ev.target.closest('[data-graph-action]');if(ga&&graphApi){if(ga.dataset.graphAction==='fit')graphApi.fit();if(ga.dataset.graphAction==='reset')graphApi.reset();if(ga.dataset.graphAction==='labels'){STATE.labels=!STATE.labels;saveState();renderRoute()}return}const gl=ev.target.closest('[data-graph-layer]');if(gl&&graphApi){graphApi.setLayer(gl.dataset.graphLayer);gl.classList.toggle('filter-on');return}const rk=ev.target.closest('[data-reveal-knowledge]');if(rk){closeSheet();routeTo('atlas');setTimeout(()=>graphApi?.revealKnowledge(rk.dataset.revealKnowledge),80);return}const ea=ev.target.closest('[data-event-atlas]');if(ea){closeSheet();const e=EVENTS.find(x=>x.id===ea.dataset.eventAtlas);if(e){STATE.timelineBook=e.book;saveState();routeTo('atlas');setTimeout(()=>{graphApi?.setTime(e.book);graphApi?.focusIds(e.participants)},100)}return}const st=ev.target.closest('[data-story]');if(st){if(st.dataset.story==='prev')storyIndex=Math.max(0,storyIndex-1);if(st.dataset.story==='next')storyIndex=Math.min(STORY.length-1,storyIndex+1);if(st.dataset.story==='pause')storyPaused=!storyPaused;renderStory();return}const act=ev.target.closest('[data-action]');if(act){if(act.dataset.action==='toggle-perf'){STATE.perfHud=!STATE.perfHud;saveState();perfHud.classList.toggle('show',STATE.perfHud);toast('Performance HUD '+(STATE.perfHud?'on':'off'))}if(act.dataset.action==='clear-history'){STATE.history=[];saveState();toast('History cleared')}if(act.dataset.action==='reset-state'){localStorage.removeItem('convergenceAtlasState');STATE={...DEFAULTS};setMotionClass();perfHud.classList.remove('show');toast('Local state reset');setTimeout(renderRoute,150)}if(act.dataset.action==='data-inspector')openDataInspector();return}const pi=ev.target.closest('[data-pindex]');if(pi){choosePalette(+pi.dataset.pindex);return}});
+document.addEventListener('click',ev=>{const route=ev.target.closest('[data-route]');if(route){ev.preventDefault();if(route.dataset.route==='more'){renderMore();return}routeTo(route.dataset.route);return}const earlyPin=ev.target.closest('[data-pin]');if(earlyPin){ev.preventDefault();ev.stopPropagation();const id=earlyPin.dataset.pin;STATE.pins=STATE.pins.includes(id)?STATE.pins.filter(x=>x!==id):[...STATE.pins,id];saveState();renderRoute();toast(STATE.pins.includes(id)?'Pinned':'Unpinned');return}const ch=ev.target.closest('[data-char]');if(ch){routeTo('character/'+ch.dataset.char);return}const rel=ev.target.closest('[data-rel]');if(rel){inspectRelationship(rel.dataset.rel);return}const kn=ev.target.closest('[data-knowledge]');if(kn){inspectKnowledge(kn.dataset.knowledge);return}const event=ev.target.closest('[data-event]');if(event){inspectEvent(event.dataset.event);return}const group=ev.target.closest('[data-group]');if(group){routeTo('groups/'+group.dataset.group);return}const archiveEntry=ev.target.closest('[data-archive-kind]');if(archiveEntry){routeTo('archive/'+archiveEntry.dataset.archiveKind+'/'+archiveEntry.dataset.archiveId);return}const con=ev.target.closest('[data-contradiction]');if(con){inspectContradiction(con.dataset.contradiction);return}const bm=ev.target.closest('[data-bookmark-type]');if(bm){ev.stopPropagation();toggleBookmark(bm.dataset.bookmarkType,bm.dataset.bookmarkId,bm.dataset.bookmarkLabel,bm.dataset.bookmarkHash);const t=bm.dataset.bookmarkType,id=bm.dataset.bookmarkId,label=bm.dataset.bookmarkLabel,hash=bm.dataset.bookmarkHash;bm.textContent=isBookmarked(t,id)?'★ Bookmarked':'☆ Bookmark';return}const bo=ev.target.closest('[data-bookmark-open]');if(bo){routeTo(bo.dataset.bookmarkOpen);return}const pin=ev.target.closest('[data-pin]');if(pin){ev.stopPropagation();const id=pin.dataset.pin;STATE.pins=STATE.pins.includes(id)?STATE.pins.filter(x=>x!==id):[...STATE.pins,id];saveState();renderRoute();toast(STATE.pins.includes(id)?'Pinned':'Unpinned');return}const scope=ev.target.closest('[data-scope-book]');if(scope){closeSheet();setScopeBook(scope.dataset.scopeBook);return}const bookOpen=ev.target.closest('[data-book-open]');if(bookOpen){routeTo('book/'+bookOpen.dataset.bookOpen);return}const bookAtlas=ev.target.closest('[data-book-atlas]');if(bookAtlas){const n=+bookAtlas.dataset.bookAtlas;STATE.timelineBook=Math.min(n,STATE.scopeBook);saveState();routeTo('atlas');setTimeout(()=>graphApi?.setTime(STATE.timelineBook),80);return}const ga=ev.target.closest('[data-graph-action]');if(ga&&graphApi){if(ga.dataset.graphAction==='fit')graphApi.fit();if(ga.dataset.graphAction==='reset')graphApi.reset();if(ga.dataset.graphAction==='labels'){STATE.labels=!STATE.labels;saveState();renderRoute()}return}const gl=ev.target.closest('[data-graph-layer]');if(gl&&graphApi){graphApi.setLayer(gl.dataset.graphLayer);gl.classList.toggle('filter-on');return}const rk=ev.target.closest('[data-reveal-knowledge]');if(rk){closeSheet();routeTo('atlas');setTimeout(()=>graphApi?.revealKnowledge(rk.dataset.revealKnowledge),80);return}const ea=ev.target.closest('[data-event-atlas]');if(ea){closeSheet();const e=EVENTS.find(x=>x.id===ea.dataset.eventAtlas);if(e){STATE.timelineBook=e.book;saveState();routeTo('atlas');setTimeout(()=>{graphApi?.setTime(e.book);graphApi?.focusIds(e.participants)},100)}return}const st=ev.target.closest('[data-story]');if(st){if(st.dataset.story==='prev')storyIndex=Math.max(0,storyIndex-1);if(st.dataset.story==='next')storyIndex=Math.min(STORY.length-1,storyIndex+1);if(st.dataset.story==='pause')storyPaused=!storyPaused;renderStory();return}const act=ev.target.closest('[data-action]');if(act){if(act.dataset.action==='toggle-perf'){STATE.perfHud=!STATE.perfHud;saveState();perfHud.classList.toggle('show',STATE.perfHud);toast('Performance HUD '+(STATE.perfHud?'on':'off'))}if(act.dataset.action==='clear-history'){STATE.history=[];saveState();toast('History cleared')}if(act.dataset.action==='reset-state'){localStorage.removeItem('convergenceAtlasState');STATE={...DEFAULTS};setMotionClass();perfHud.classList.remove('show');toast('Local state reset');setTimeout(renderRoute,150)}if(act.dataset.action==='data-inspector')openDataInspector();return}const pi=ev.target.closest('[data-pindex]');if(pi){choosePalette(+pi.dataset.pindex);return}});
 function openDataInspector(){openSheet('Internal data inspector',`<div class="kicker">Local source model</div><p class="tiny">Characters ${CHARACTERS.length} · relationships ${RELATIONSHIPS.length} · events ${EVENTS.length} · knowledge ${KNOWLEDGE.length} · groups ${GROUPS.length} · contradictions ${CONTRADICTIONS.length}</p><details><summary>Characters</summary><pre class="tiny" style="white-space:pre-wrap">${esc(JSON.stringify(CHARACTERS,null,2))}</pre></details><details><summary>Relationships</summary><pre class="tiny" style="white-space:pre-wrap">${esc(JSON.stringify(RELATIONSHIPS,null,2))}</pre></details><details><summary>Events</summary><pre class="tiny" style="white-space:pre-wrap">${esc(JSON.stringify(EVENTS,null,2))}</pre></details>`,'full')}
 
 document.getElementById('sheetClose').onclick=closeSheet;backdrop.onclick=closeSheet;document.getElementById('scopeBtn').onclick=openScopeControl;syncScopeButton();

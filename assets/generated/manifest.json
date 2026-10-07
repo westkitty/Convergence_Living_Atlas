@@ -12,9 +12,10 @@
   },
   "production": {
     "format": "webp",
-    "count": 25,
-    "approx_bundle_mib": 2.8,
-    "quality": 78
+    "count": 68,
+    "approx_bundle_mib": 7.6,
+    "quality": 78,
+    "note": "25-image foundation pack plus 43-image /converg record-art pack; duplicate variants remain in Drive."
   },
   "assets": {
     "hero.webp": "Oct 07 - 00_03/Website_banner_for_Convergence_L…_20261007001427.jpg",
@@ -42,5 +43,17 @@
     "anomaly.webp": "convergence_character_images/orange_anomaly_investigator.png",
     "tactical.webp": "convergence_character_images/tactical_route_through_ruins.png",
     "temporal.webp": "convergence_character_images/temporal_warrior_amidst_ruins.png"
+  },
+  "additional_source": {
+    "verified_path": "/Users/andrew/Library/CloudStorage/GoogleDrive-digitalghosts269@gmail.com/My Drive/macbook/converge/converg",
+    "verified_host": "MacBook-Air.local",
+    "image_count": 331,
+    "source_bytes": 301483342,
+    "curated_count": 43,
+    "style": "cel-shaded flat animation",
+    "verified_at": "2026-10-07"
+  },
+  "asset_families": {
+    "converg": "assets/generated/converg/manifest.json"
   }
 }
